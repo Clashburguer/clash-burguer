@@ -1,0 +1,8 @@
+{
+  "name": "Clash Burguer - Cardápio Digital & Delivery",
+  "description": "Cardápio digital moderno e interativo para pedidos via WhatsApp da Clash Burguer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

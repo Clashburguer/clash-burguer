@@ -1,0 +1,323 @@
+{
+  "restaurantInfo": {
+    "name": "Clash Burguer",
+    "shortName": "Clash Burguer",
+    "tagline": "Hamburgueria Artesanal & O Autêntico Kikão",
+    "type": "Hamburgueria Artesanal / Delivery",
+    "phone": "97981253278",
+    "phoneFormatted": "(97) 98125-3278",
+    "whatsappNumber": "5597981253278",
+    "deliveryFee": 2.00,
+    "deliveryTime": "20 a 30 minutos",
+    "status": "Aberto para Pedidos",
+    "openingHours": "Segunda a Domingo: 17:00 às 23:00",
+    "location": "Delivery & Retirada",
+    "city": "Amazonas, AM",
+    "instagram": "@Clash_burguerr",
+    "instagramUrl": "https://instagram.com/Clash_burguerr",
+    "tiktok": "@clashburguerr",
+    "tiktokUrl": "https://tiktok.com/@clashburguerr",
+    "pixKey": "97 8460-8125",
+    "pixKeyType": "Telefone / WhatsApp",
+    "bannerAnnouncement": "Entregas rápidas com taxa fixa de apenas R$ 2,00! Peça seu Burger ou Kikão agora."
+  },
+  "categories": [
+    {
+      "id": "burgers-smash",
+      "name": "Burgers Smash",
+      "subtitle": "Linha Clash",
+      "icon": "Flame",
+      "description": "Pão brioche fofinho, carnes smash suculentas e muito cheddar"
+    },
+    {
+      "id": "burgers-tradicionais",
+      "name": "Hambúrgueres",
+      "subtitle": "Nossos Burgers",
+      "icon": "Utensils",
+      "description": "Receitas clássicas que conquistam a cada mordida"
+    },
+    {
+      "id": "kikao",
+      "name": "Kikão Tradicional",
+      "subtitle": "Hot Dog Regional",
+      "icon": "Sparkles",
+      "description": "O autêntico Kikão manauara com queijo ralado e batata palha"
+    },
+    {
+      "id": "porcoes",
+      "name": "Porções & Fritas",
+      "subtitle": "Petiscos",
+      "icon": "ShoppingBag",
+      "description": "Batatas crocantes, calabresa acebolada e bacon dourado"
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "subtitle": "Geladas",
+      "icon": "CupSoda",
+      "description": "Sucos naturais da fruta, refrigerantes e água mineral"
+    }
+  ],
+  "addons": {
+    "burgers": [
+      { "id": "add-smash", "name": "Carne Smash Extra (80g)", "price": 6.00 },
+      { "id": "add-bacon", "name": "Bacon Crocante em Tiras", "price": 4.00 },
+      { "id": "add-cheddar", "name": "Queijo Cheddar Fatiado Extra", "price": 3.00 },
+      { "id": "add-mussarela", "name": "Queijo Mussarela Derretido", "price": 3.00 },
+      { "id": "add-ovo", "name": "Ovo Frito", "price": 2.00 },
+      { "id": "add-calabresa", "name": "Calabresa Fatiada Dourada", "price": 3.50 },
+      { "id": "add-molho", "name": "Molho Especial Clash à parte", "price": 2.00 },
+      { "id": "add-batata-palha", "name": "Porção Extra de Batata Palha", "price": 2.00 }
+    ],
+    "kikao": [
+      { "id": "add-k-salsicha", "name": "Salsicha Adicional", "price": 2.50 },
+      { "id": "add-k-bacon", "name": "Bacon em Cubos Dourados", "price": 3.50 },
+      { "id": "add-k-carne", "name": "Carne Moída Refogada", "price": 3.50 },
+      { "id": "add-k-calabresa", "name": "Calabresa Fatiada", "price": 3.50 },
+      { "id": "add-k-queijo", "name": "Queijo Ralado em Dobro", "price": 2.00 },
+      { "id": "add-k-batata", "name": "Batata Palha Extra", "price": 2.00 },
+      { "id": "add-k-maionese", "name": "Maionese da Casa Extra", "price": 2.00 }
+    ],
+    "sides": [
+      { "id": "add-molho-cheddar", "name": "Pote Molho Cheddar Cremoso (50ml)", "price": 3.50 },
+      { "id": "add-molho-rose", "name": "Pote Molho Rosé Especial (50ml)", "price": 2.50 },
+      { "id": "add-maionese-verde", "name": "Pote Maionese Verde Temperada (50ml)", "price": 2.50 }
+    ]
+  },
+  "products": [
+    {
+      "id": "clash-smash",
+      "name": "Clash",
+      "category": "burgers-smash",
+      "price": 20.00,
+      "description": "Pão brioche tostado na manteiga, carne smash suculenta, queijo cheddar derretido, tomate fresco, cebola e alface crocante.",
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
+      "badge": "Mais Vendido",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "clash-dupla",
+      "name": "Clash Dupla",
+      "category": "burgers-smash",
+      "price": 30.00,
+      "description": "Pão brioche quentinho, 2 carnes smash artesanais, 2 fatias de queijo cheddar cremoso, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80",
+      "badge": "Duplo Smash",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "clash-bacon",
+      "name": "Clash Bacon",
+      "category": "burgers-smash",
+      "price": 26.00,
+      "description": "Pão brioche, carne smash crocante nas bordas, tiras generosas de bacon defumado, queijo cheddar, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&auto=format&fit=crop&q=80",
+      "badge": "Favorito",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "clashzao",
+      "name": "Clashzão",
+      "category": "burgers-smash",
+      "price": 35.00,
+      "description": "O monstro épico da casa! Pão brioche, 2 carnes smash, 3 camadas de cheddar derretido, bacon crocante, calabresa acebolada, ovo frito, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1583032015879-6b5d928fe828?w=600&auto=format&fit=crop&q=80",
+      "badge": "O Maior da Casa",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "salada",
+      "name": "X-Salada",
+      "category": "burgers-tradicionais",
+      "price": 10.00,
+      "description": "Pão brioche macio, carne suculenta, presunto fatiado, queijo derretido, tomate, cebola e alface fresca.",
+      "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "calabresa",
+      "name": "X-Calabresa",
+      "category": "burgers-tradicionais",
+      "price": 15.00,
+      "description": "Pão brioche, carne grelhada, calabresa dourada fatiada, presunto, queijo derretido, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "bacon-tradicional",
+      "name": "X-Bacon",
+      "category": "burgers-tradicionais",
+      "price": 15.00,
+      "description": "Pão brioche tostado, carne bovina, fatias crocantes de bacon, presunto, queijo mussarela, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1608767221051-2b9d18f35a2f?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "salsicha-burger",
+      "name": "X-Salsicha",
+      "category": "burgers-tradicionais",
+      "price": 15.00,
+      "description": "Pão brioche, salsicha especial, carne bovina, presunto, queijo derretido, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "tudo-burger",
+      "name": "X-Tudo",
+      "category": "burgers-tradicionais",
+      "price": 20.00,
+      "description": "Pão brioche recheado ao extremo com carne bovina, bacon crocante, calabresa, salsicha, presunto, queijo derretido, tomate, cebola e alface.",
+      "image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&auto=format&fit=crop&q=80",
+      "badge": "Com Tudo",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "misto",
+      "name": "X-Misto",
+      "category": "burgers-tradicionais",
+      "price": 5.00,
+      "description": "Pão brioche tostado na chapa com generosa camada de presunto, queijo mussarela puxando e ovo.",
+      "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&auto=format&fit=crop&q=80",
+      "badge": "R$ 5,00",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "misto-duplo",
+      "name": "X-Misto Duplo",
+      "category": "burgers-tradicionais",
+      "price": 10.00,
+      "description": "Pão brioche quentinho com o dobro de recheio: 2x fatias de presunto, 2x porções de queijo mussarela e ovo.",
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "natural",
+      "name": "X-Natural",
+      "category": "burgers-tradicionais",
+      "price": 8.00,
+      "description": "Pão brioche macio, presunto fatiado, queijo mussarela suave, fatias de tomate fresco, cebola e alface crocante.",
+      "image": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "kikao-simples",
+      "name": "Kikão Simples",
+      "category": "kikao",
+      "price": 6.00,
+      "description": "Pão especial bem macio, molho de tomate artesanal da casa, salsicha selecionada, queijo ralado fininho e batata palha crocante.",
+      "image": "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=600&auto=format&fit=crop&q=80",
+      "badge": "Tradicional",
+      "addonGroup": "kikao"
+    },
+    {
+      "id": "kikao-bacon",
+      "name": "Kikão Bacon",
+      "category": "kikao",
+      "price": 10.00,
+      "description": "Pão super macio, molho especial da casa, queijo ralado, salsicha, batata palha fininha e cubos crocantes de bacon.",
+      "image": "https://images.unsplash.com/photo-1627054234559-0f46f49ca3ef?w=600&auto=format&fit=crop&q=80",
+      "badge": "Mais Pedido",
+      "addonGroup": "kikao"
+    },
+    {
+      "id": "kikao-carne",
+      "name": "Kikão Carne",
+      "category": "kikao",
+      "price": 10.00,
+      "description": "Pão macio, molho especial da casa, salsicha, queijo ralado, batata palha e muita carne moída refogada bem temperadinha.",
+      "image": "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "kikao"
+    },
+    {
+      "id": "kikao-calabresa",
+      "name": "Kikão Calabresa",
+      "category": "kikao",
+      "price": 10.00,
+      "description": "Pão macio, molho especial da casa, salsicha suculenta, queijo ralado, batata palha e rodelas de calabresa acebolada.",
+      "image": "https://images.unsplash.com/photo-1627054234559-0f46f49ca3ef?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "kikao"
+    },
+    {
+      "id": "kikao-tudo",
+      "name": "Kikão Tudo",
+      "category": "kikao",
+      "price": 15.00,
+      "description": "O Rei dos Kikões! Pão fofinho, molho especial, salsicha, queijo ralado, batata palha, calabresa dourada, bacon crocante, carne moída refogada e maionese da casa.",
+      "image": "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=600&auto=format&fit=crop&q=80",
+      "badge": "Kikão Completo",
+      "addonGroup": "kikao"
+    },
+    {
+      "id": "batata-frita-tradicional",
+      "name": "Batata Frita Tradicional",
+      "category": "porcoes",
+      "price": 8.00,
+      "description": "Porção de 200g de batatas palito sequinhas, crocantes por fora e macias por dentro, com leve toque de sal temperado.",
+      "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80",
+      "addonGroup": "sides"
+    },
+    {
+      "id": "batata-calabresa",
+      "name": "Batata Calabresa",
+      "category": "porcoes",
+      "price": 15.00,
+      "description": "Porção de batatas fritas crocantes cobertas com rodelas de calabresa douradinha acebolada e queijo.",
+      "image": "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&auto=format&fit=crop&q=80",
+      "badge": "Calabresa",
+      "addonGroup": "sides"
+    },
+    {
+      "id": "batata-bacon",
+      "name": "Batata Bacon",
+      "category": "porcoes",
+      "price": 15.00,
+      "description": "Porção de batatas fritas crocantes com muito queijo cremoso e generosos cubinhos de bacon frito.",
+      "image": "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&auto=format&fit=crop&q=80",
+      "badge": "Mais Pedida",
+      "addonGroup": "sides"
+    },
+    {
+      "id": "batata-tudo",
+      "name": "Batata Tudo",
+      "category": "porcoes",
+      "price": 20.00,
+      "description": "A mais completa! Batata frita crocante com cobertura de queijo cremoso, cubos de bacon, calabresa fatiada e maionese da casa.",
+      "image": "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600&auto=format&fit=crop&q=80",
+      "badge": "Completa",
+      "addonGroup": "sides"
+    },
+    {
+      "id": "suco-natural",
+      "name": "Suco Natural (400ml)",
+      "category": "bebidas",
+      "price": 7.00,
+      "description": "Suco natural e refrescante 400ml feito com polpa natural da fruta. Escolha entre Laranja, Acerola ou Maracujá nas observações.",
+      "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&auto=format&fit=crop&q=80",
+      "badge": "Refrescante"
+    },
+    {
+      "id": "coca-cola-lata",
+      "name": "Coca-Cola Lata 350ml",
+      "category": "bebidas",
+      "price": 7.00,
+      "description": "Lata de 350ml trincando de gelada.",
+      "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "coca-cola-1l",
+      "name": "Coca-Cola Garrafa 1 Litro",
+      "category": "bebidas",
+      "price": 13.00,
+      "description": "Garrafa de Coca-Cola 1 Litro super gelada para acompanhar seu lanche ou compartilhar.",
+      "image": "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "agua-mineral",
+      "name": "Água Mineral 500ml",
+      "category": "bebidas",
+      "price": 3.00,
+      "description": "Garrafinha 500ml sem gás bem gelada.",
+      "image": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80"
+    }
+  ]
+}
