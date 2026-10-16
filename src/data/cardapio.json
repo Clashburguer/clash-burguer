@@ -59,30 +59,9 @@
     }
   ],
   "addons": {
-    "burgers": [
-      { "id": "add-smash", "name": "Carne Smash Extra (80g)", "price": 6.00 },
-      { "id": "add-bacon", "name": "Bacon Crocante em Tiras", "price": 4.00 },
-      { "id": "add-cheddar", "name": "Queijo Cheddar Fatiado Extra", "price": 3.00 },
-      { "id": "add-mussarela", "name": "Queijo Mussarela Derretido", "price": 3.00 },
-      { "id": "add-ovo", "name": "Ovo Frito", "price": 2.00 },
-      { "id": "add-calabresa", "name": "Calabresa Fatiada Dourada", "price": 3.50 },
-      { "id": "add-molho", "name": "Molho Especial Clash à parte", "price": 2.00 },
-      { "id": "add-batata-palha", "name": "Porção Extra de Batata Palha", "price": 2.00 }
-    ],
-    "kikao": [
-      { "id": "add-k-salsicha", "name": "Salsicha Adicional", "price": 2.50 },
-      { "id": "add-k-bacon", "name": "Bacon em Cubos Dourados", "price": 3.50 },
-      { "id": "add-k-carne", "name": "Carne Moída Refogada", "price": 3.50 },
-      { "id": "add-k-calabresa", "name": "Calabresa Fatiada", "price": 3.50 },
-      { "id": "add-k-queijo", "name": "Queijo Ralado em Dobro", "price": 2.00 },
-      { "id": "add-k-batata", "name": "Batata Palha Extra", "price": 2.00 },
-      { "id": "add-k-maionese", "name": "Maionese da Casa Extra", "price": 2.00 }
-    ],
-    "sides": [
-      { "id": "add-molho-cheddar", "name": "Pote Molho Cheddar Cremoso (50ml)", "price": 3.50 },
-      { "id": "add-molho-rose", "name": "Pote Molho Rosé Especial (50ml)", "price": 2.50 },
-      { "id": "add-maionese-verde", "name": "Pote Maionese Verde Temperada (50ml)", "price": 2.50 }
-    ]
+    "burgers": [],
+    "kikao": [],
+    "sides": []
   },
   "products": [
     {
