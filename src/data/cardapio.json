@@ -24,8 +24,8 @@
   "categories": [
     {
       "id": "burgers-smash",
-      "name": "Burgers Smash",
-      "subtitle": "Linha Clash",
+      "name": "Clash",
+      "subtitle": "Linha Smash",
       "icon": "Flame",
       "description": "Pão brioche fofinho, carnes smash suculentas e muito cheddar"
     },
@@ -76,7 +76,7 @@
     },
     {
       "id": "clash-dupla",
-      "name": "Clash Dupla",
+      "name": "Clash Duplo",
       "category": "burgers-smash",
       "price": 30.00,
       "description": "Pão brioche quentinho, 2 carnes smash artesanais, 2 fatias de queijo cheddar cremoso, tomate, cebola caramelizada e alface.",
@@ -92,6 +92,26 @@
       "description": "Pão brioche, carne smash crocante nas bordas, tiras generosas de bacon defumado, queijo cheddar, tomate, cebola caramelizada e alface.",
       "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&auto=format&fit=crop&q=80",
       "badge": "Favorito",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "clash-calabresa",
+      "name": "Clash Calabresa",
+      "category": "burgers-smash",
+      "price": 26.00,
+      "description": "Pão brioche tostado na manteiga, carne smash suculenta, calabresa fatiada, queijo cheddar derretido, tomate fresco, cebola caramelizada e alface crocante.",
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80",
+      "badge": "Novidade",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "clash-salsicha",
+      "name": "Clash Salsicha",
+      "category": "burgers-smash",
+      "price": 25.00,
+      "description": "Pão brioche quentinho, carne smash suculenta, salsicha especial, queijo cheddar cremoso, tomate fresco, cebola caramelizada e alface crocante.",
+      "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&auto=format&fit=crop&q=80",
+      "badge": "Novidade",
       "addonGroup": "burgers"
     },
     {
@@ -302,10 +322,10 @@
     },
     {
       "id": "agua-mineral",
-      "name": "Água Mineral 500ml",
+      "name": "Água Mineral de 300ml",
       "category": "bebidas",
       "price": 3.00,
-      "description": "Garrafinha 500ml sem gás bem gelada.",
+      "description": "Garrafinha de 300ml sem gás bem gelada.",
       "image": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80"
     }
   ]

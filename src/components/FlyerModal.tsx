@@ -59,7 +59,7 @@ export const FlyerModal: React.FC<FlyerModalProps> = ({
               </div>
               <div className="flex justify-between pt-2">
                 <div>
-                  <strong className="text-white text-sm">CLASH DUPLA</strong>
+                  <strong className="text-white text-sm">CLASH DUPLO</strong>
                   <p className="text-zinc-400 text-[11px]">Pão brioche, 2 carnes smash, 2 cheddars, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 30,00</span>
@@ -70,6 +70,20 @@ export const FlyerModal: React.FC<FlyerModalProps> = ({
                   <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, bacon, cheddar, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 26,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white text-sm">CLASH CALABRESA</strong>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, calabresa, cheddar, tomate, cebola caramelizada, alface</p>
+                </div>
+                <span className="text-pink-400 font-black text-sm">R$ 26,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white text-sm">CLASH SALSICHA</strong>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, salsicha especial, cheddar, tomate, cebola caramelizada, alface</p>
+                </div>
+                <span className="text-pink-400 font-black text-sm">R$ 25,00</span>
               </div>
               <div className="flex justify-between pt-2">
                 <div>

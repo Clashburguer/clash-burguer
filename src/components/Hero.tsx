@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ restaurant, onSelectCategory, onOpen
               onClick={() => onSelectCategory('burgers-smash')}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-pink-600 text-white text-xs font-bold hover:bg-pink-700 shadow-xs transition-all cursor-pointer"
             >
-              <Flame className="w-3.5 h-3.5" /> Ver Burgers Smash
+              <Flame className="w-3.5 h-3.5" /> Ver Linha Clash
             </button>
             
             <button
