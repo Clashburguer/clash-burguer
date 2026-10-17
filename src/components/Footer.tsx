@@ -1,7 +1,7 @@
 import React from 'react';
 import { Phone, Clock, Bike, Instagram, Heart, FileText } from 'lucide-react';
 import { RestaurantInfo } from '../types';
-import clashLogo from '../assets/images/clash_burguer_couple_logo_1792182603551.jpg';
+import clashLogo from '../assets/images/clash_burguer_king_princess_logo_1792257605760.jpg';
 
 interface FooterProps {
   restaurant: RestaurantInfo;

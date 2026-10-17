@@ -66,31 +66,24 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md transition-colors cursor-pointer"
           aria-label="Fechar"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Header / Image */}
-        <div className="relative aspect-16/9 w-full bg-pink-100 shrink-0 overflow-hidden">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-          
-          <div className="absolute bottom-3 left-4 right-4 text-white">
+        {/* Header */}
+        <div className="relative p-5 sm:p-6 bg-gradient-to-r from-pink-600 via-pink-500 to-rose-500 text-white shrink-0">
+          <div className="pr-8">
             {product.badge && (
-              <span className="inline-flex items-center gap-1 bg-pink-600 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-1.5 shadow-xs">
+              <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-2">
                 <Sparkles className="w-3 h-3" /> {product.badge}
               </span>
             )}
-            <h2 className="text-xl sm:text-2xl font-black leading-tight drop-shadow-xs">
+            <h2 className="text-xl sm:text-2xl font-black leading-tight">
               {product.name}
             </h2>
-            <p className="text-xs sm:text-sm text-pink-100 line-clamp-2 mt-0.5">
+            <p className="text-xs sm:text-sm text-pink-100 mt-1 leading-relaxed">
               {product.description}
             </p>
           </div>

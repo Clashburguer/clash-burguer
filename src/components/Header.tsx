@@ -1,10 +1,12 @@
 import React from 'react';
 import { ShoppingBag, Search, Clock, Bike, Instagram, Phone, X } from 'lucide-react';
 import { RestaurantInfo } from '../types';
-import clashLogo from '../assets/images/clash_burguer_couple_logo_1792182603551.jpg';
+import { StoreStatus } from '../utils/storeHours';
+import clashLogo from '../assets/images/clash_burguer_king_princess_logo_1792257605760.jpg';
 
 interface HeaderProps {
   restaurant: RestaurantInfo;
+  storeStatus: StoreStatus;
   cartCount: number;
   cartTotal: number;
   onOpenCart: () => void;
@@ -15,6 +17,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   restaurant,
+  storeStatus,
   cartCount,
   cartTotal,
   onOpenCart,
@@ -28,8 +31,17 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5 font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              {restaurant.status}
+              {storeStatus.isOpen ? (
+                <>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Aberto para Pedidos</span>
+                </>
+              ) : (
+                <>
+                  <span className="w-2 h-2 rounded-full bg-amber-300"></span>
+                  <span>Fechado • Abre às 16:00</span>
+                </>
+              )}
             </span>
             <span className="hidden sm:inline-block text-pink-100">|</span>
             <span className="hidden sm:flex items-center gap-1 text-pink-50">

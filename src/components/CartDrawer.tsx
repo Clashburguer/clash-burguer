@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { CartItem, CustomerData, RestaurantInfo } from '../types';
+import { StoreStatus } from '../utils/storeHours';
 import { formatCurrency, buildWhatsAppMessage, generateWhatsAppUrl } from '../utils/formatters';
 
 interface CartDrawerProps {
@@ -28,6 +29,7 @@ interface CartDrawerProps {
   onRemoveItem: (cartItemId: string) => void;
   onClearCart: () => void;
   restaurant: RestaurantInfo;
+  storeStatus: StoreStatus;
   onOrderSuccess: (message: string, url: string) => void;
 }
 
@@ -39,6 +41,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onRemoveItem,
   onClearCart,
   restaurant,
+  storeStatus,
   onOrderSuccess,
 }) => {
   const [customer, setCustomer] = useState<CustomerData>({
@@ -220,6 +223,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
           ) : (
             <>
+              {/* Store Closed Warning Banner */}
+              {!storeStatus.isOpen && (
+                <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-2.5 text-xs text-amber-900 shadow-2xs">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block font-bold text-amber-900 mb-0.5">
+                      Estamos fechados no momento!
+                    </strong>
+                    <span className="text-amber-800 leading-relaxed block">
+                      Retornaremos novamente às 16:00 da tarde. Você ainda pode enviar seu pedido pelo WhatsApp para ficar agendado!
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {/* Item List */}
               <div className="space-y-3">
                 <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
@@ -232,20 +250,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     className="p-3.5 bg-pink-50/40 rounded-2xl border border-pink-100/80 flex flex-col gap-2"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-2.5">
-                        <img
-                          src={item.product.image}
-                          alt={item.product.name}
-                          className="w-12 h-12 rounded-xl object-cover bg-white shrink-0 border border-pink-100"
-                        />
-                        <div>
-                          <h4 className="text-sm font-black text-gray-900 leading-tight">
-                            {item.product.name}
-                          </h4>
-                          <span className="text-xs font-bold text-pink-600">
-                            {formatCurrency(item.product.price)} un
-                          </span>
-                        </div>
+                      <div>
+                        <h4 className="text-sm font-black text-gray-900 leading-tight">
+                          {item.product.name}
+                        </h4>
+                        <span className="text-xs font-bold text-pink-600">
+                          {formatCurrency(item.product.price)} un
+                        </span>
                       </div>
                       <span className="text-sm font-black text-gray-900">
                         {formatCurrency(item.itemTotalPrice)}
@@ -753,9 +764,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <button
               type="button"
               onClick={handleFinishOrder}
-              className="w-full bg-gradient-to-r from-pink-600 via-pink-500 to-rose-500 hover:from-pink-500 hover:to-rose-600 text-white py-3.5 px-4 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-pink-500/25 active:scale-98 transition-all cursor-pointer"
+              className={`w-full text-white py-3.5 px-4 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl active:scale-98 transition-all cursor-pointer ${
+                storeStatus.isOpen
+                  ? 'bg-gradient-to-r from-pink-600 via-pink-500 to-rose-500 hover:from-pink-500 hover:to-rose-600 shadow-pink-500/25'
+                  : 'bg-gradient-to-r from-amber-600 via-rose-500 to-pink-600 hover:opacity-95 shadow-amber-500/25'
+              }`}
             >
-              <span>Finalizar Pedido no WhatsApp</span>
+              <span>
+                {storeStatus.isOpen
+                  ? 'Finalizar Pedido no WhatsApp'
+                  : 'Enviar Pedido para as 16h no WhatsApp'}
+              </span>
               <ArrowRight className="w-5 h-5" />
             </button>
             <p className="text-[10px] text-center text-gray-400 font-medium">

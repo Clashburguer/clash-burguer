@@ -22,6 +22,11 @@ export function buildWhatsAppMessage(
 
   let text = `🍔 *NOVO PEDIDO #${orderId} - CLASH BURGUER* 🍔\n`;
   text += `⏰ Horário: ${dateStr}\n`;
+  
+  const currentHour = new Date().getHours();
+  if (currentHour < 16 || currentHour >= 23) {
+    text += `⚠️ *Aviso: Pedido enviado com a loja fechada. (Atendimento retorna às 16:00)*\n`;
+  }
   text += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
   text += `👤 *DADOS DO CLIENTE*\n`;

@@ -11,13 +11,25 @@ import { OrderSuccessModal } from './components/OrderSuccessModal';
 import { FlyerModal } from './components/FlyerModal';
 import { Footer } from './components/Footer';
 import { formatCurrency } from './utils/formatters';
-import { ShoppingBag, ArrowRight, Search, UtensilsCrossed } from 'lucide-react';
+import { checkStoreStatus, StoreStatus } from './utils/storeHours';
+import { ShoppingBag, ArrowRight, Search, UtensilsCrossed, Clock } from 'lucide-react';
 
 export default function App() {
   const restaurant = cardapioData.restaurantInfo as RestaurantInfo;
   const categories = cardapioData.categories as Category[];
   const products = cardapioData.products as Product[];
   const availableAddons = cardapioData.addons as Record<string, Addon[]>;
+
+  // Store open/close status (open 16:00 to 23:00)
+  const [storeStatus, setStoreStatus] = useState<StoreStatus>(() => checkStoreStatus());
+
+  useEffect(() => {
+    // Recheck every 30 seconds
+    const interval = setInterval(() => {
+      setStoreStatus(checkStoreStatus());
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Cart state persisted to localStorage
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -174,6 +186,7 @@ export default function App() {
       {/* Top Header */}
       <Header
         restaurant={restaurant}
+        storeStatus={storeStatus}
         cartCount={cartCount}
         cartTotal={cartTotal}
         onOpenCart={() => setIsCartOpen(true)}
@@ -181,6 +194,30 @@ export default function App() {
         onSearchChange={setSearchQuery}
         onOpenFlyer={() => setIsFlyerOpen(true)}
       />
+
+      {/* Store Closed Banner (active between 23:00 and 16:00) */}
+      {!storeStatus.isOpen && (
+        <div className="bg-gradient-to-r from-amber-600 via-rose-600 to-pink-600 text-white py-3 px-4 shadow-md sticky top-[106px] z-30">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left">
+            <div className="flex items-center gap-3">
+              <span className="p-1.5 bg-white/20 rounded-xl shrink-0">
+                <Clock className="w-4 h-4 text-amber-200 animate-pulse" />
+              </span>
+              <div>
+                <p className="text-xs sm:text-sm font-black tracking-wide">
+                  Estamos fechados no momento e retornaremos novamente no outro dia às 16:00 da tarde!
+                </p>
+                <p className="text-[11px] text-pink-100 font-medium">
+                  Horário de funcionamento: das 16:00 às 23:00. Você ainda pode navegar pelo cardápio e agendar seu pedido pelo WhatsApp!
+                </p>
+              </div>
+            </div>
+            <span className="text-[11px] font-extrabold bg-white/20 px-3 py-1 rounded-full whitespace-nowrap shadow-xs">
+              Abre às 16:00
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Hero Banner (hidden when searching for minimal distraction) */}
       {!searchQuery && (
@@ -357,6 +394,7 @@ export default function App() {
         onRemoveItem={handleRemoveItem}
         onClearCart={handleClearCart}
         restaurant={restaurant}
+        storeStatus={storeStatus}
         onOrderSuccess={handleOrderSuccess}
       />
 
