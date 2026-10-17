@@ -53,30 +53,68 @@ export const FlyerModal: React.FC<FlyerModalProps> = ({
               <div className="flex justify-between pt-1">
                 <div>
                   <strong className="text-white text-sm">CLASH</strong>
-                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, cheddar, tomate, cebola, alface</p>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, cheddar, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 20,00</span>
               </div>
               <div className="flex justify-between pt-2">
                 <div>
                   <strong className="text-white text-sm">CLASH DUPLA</strong>
-                  <p className="text-zinc-400 text-[11px]">Pão brioche, 2 carnes smash, 2 cheddars, tomate, cebola, alface</p>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, 2 carnes smash, 2 cheddars, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 30,00</span>
               </div>
               <div className="flex justify-between pt-2">
                 <div>
                   <strong className="text-white text-sm">CLASH BACON</strong>
-                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, bacon, cheddar, tomate, cebola, alface</p>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne smash, bacon, cheddar, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 26,00</span>
               </div>
               <div className="flex justify-between pt-2">
                 <div>
                   <strong className="text-white text-sm">CLASHZÃO</strong>
-                  <p className="text-zinc-400 text-[11px]">Pão brioche, 2 carnes smash, 3 cheddars, bacon, calabresa, ovo, tomate, cebola, alface</p>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, 2 carnes smash, 3 cheddars, bacon, calabresa, ovo, tomate, cebola caramelizada, alface</p>
                 </div>
                 <span className="text-pink-400 font-black text-sm">R$ 35,00</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Hambúrgueres Tradicionais */}
+          <div className="bg-zinc-900/80 p-4 rounded-2xl border border-pink-500/20">
+            <h4 className="text-pink-400 font-extrabold uppercase tracking-wider mb-2.5 text-sm flex items-center justify-between">
+              <span>HAMBÚRGUERES TRADICIONAIS</span>
+              <span className="text-[10px] text-zinc-400">Pão Brioche</span>
+            </h4>
+            <div className="space-y-2 divide-y divide-zinc-800">
+              <div className="flex justify-between pt-1">
+                <div>
+                  <strong className="text-white">Hambúrguer</strong>
+                  <p className="text-zinc-400 text-[11px]">Pão brioche, carne de hambúrguer, presunto e queijo derretido</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 10,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">X-Salada</strong>
+                  <p className="text-zinc-400 text-[11px]">Carne, presunto, queijo, tomate, cebola e alface</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 10,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">X-Calabresa / X-Bacon / X-Salsicha</strong>
+                  <p className="text-zinc-400 text-[11px]">Com recheio especial selecionado</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 15,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">X-Tudo</strong>
+                  <p className="text-zinc-400 text-[11px]">Carne, bacon, calabresa, salsicha, presunto, queijo, salada</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 20,00</span>
               </div>
             </div>
           </div>

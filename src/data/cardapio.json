@@ -69,7 +69,7 @@
       "name": "Clash",
       "category": "burgers-smash",
       "price": 20.00,
-      "description": "Pão brioche tostado na manteiga, carne smash suculenta, queijo cheddar derretido, tomate fresco, cebola e alface crocante.",
+      "description": "Pão brioche tostado na manteiga, carne smash suculenta, queijo cheddar derretido, tomate fresco, cebola caramelizada e alface crocante.",
       "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
       "badge": "Mais Vendido",
       "addonGroup": "burgers"
@@ -79,7 +79,7 @@
       "name": "Clash Dupla",
       "category": "burgers-smash",
       "price": 30.00,
-      "description": "Pão brioche quentinho, 2 carnes smash artesanais, 2 fatias de queijo cheddar cremoso, tomate, cebola e alface.",
+      "description": "Pão brioche quentinho, 2 carnes smash artesanais, 2 fatias de queijo cheddar cremoso, tomate, cebola caramelizada e alface.",
       "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80",
       "badge": "Duplo Smash",
       "addonGroup": "burgers"
@@ -89,7 +89,7 @@
       "name": "Clash Bacon",
       "category": "burgers-smash",
       "price": 26.00,
-      "description": "Pão brioche, carne smash crocante nas bordas, tiras generosas de bacon defumado, queijo cheddar, tomate, cebola e alface.",
+      "description": "Pão brioche, carne smash crocante nas bordas, tiras generosas de bacon defumado, queijo cheddar, tomate, cebola caramelizada e alface.",
       "image": "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&auto=format&fit=crop&q=80",
       "badge": "Favorito",
       "addonGroup": "burgers"
@@ -99,9 +99,19 @@
       "name": "Clashzão",
       "category": "burgers-smash",
       "price": 35.00,
-      "description": "O monstro épico da casa! Pão brioche, 2 carnes smash, 3 camadas de cheddar derretido, bacon crocante, calabresa acebolada, ovo frito, tomate, cebola e alface.",
+      "description": "O monstro épico da casa! Pão brioche, 2 carnes smash, 3 camadas de cheddar derretido, bacon crocante, calabresa acebolada, ovo frito, tomate, cebola caramelizada e alface.",
       "image": "https://images.unsplash.com/photo-1583032015879-6b5d928fe828?w=600&auto=format&fit=crop&q=80",
       "badge": "O Maior da Casa",
+      "addonGroup": "burgers"
+    },
+    {
+      "id": "hamburguer",
+      "name": "Hambúrguer",
+      "category": "burgers-tradicionais",
+      "price": 10.00,
+      "description": "Pão brioche quentinho, carne de hambúrguer grelhada na chapa, presunto e queijo derretido.",
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
+      "badge": "R$ 10,00",
       "addonGroup": "burgers"
     },
     {
@@ -109,7 +119,7 @@
       "name": "X-Salada",
       "category": "burgers-tradicionais",
       "price": 10.00,
-      "description": "Pão brioche macio, carne suculenta, presunto fatiado, queijo derretido, tomate, cebola e alface fresca.",
+      "description": "Pão brioche macio, carne de hambúrguer, presunto fatiado, queijo derretido, tomate, cebola e alface fresca.",
       "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600&auto=format&fit=crop&q=80",
       "addonGroup": "burgers"
     },
@@ -118,7 +128,7 @@
       "name": "X-Calabresa",
       "category": "burgers-tradicionais",
       "price": 15.00,
-      "description": "Pão brioche, carne grelhada, calabresa dourada fatiada, presunto, queijo derretido, tomate, cebola e alface.",
+      "description": "Pão brioche, carne de hambúrguer, calabresa dourada fatiada, presunto, queijo derretido, tomate, cebola e alface.",
       "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80",
       "addonGroup": "burgers"
     },
@@ -127,7 +137,7 @@
       "name": "X-Bacon",
       "category": "burgers-tradicionais",
       "price": 15.00,
-      "description": "Pão brioche tostado, carne bovina, fatias crocantes de bacon, presunto, queijo mussarela, tomate, cebola e alface.",
+      "description": "Pão brioche tostado, carne de hambúrguer, fatias crocantes de bacon, presunto, queijo mussarela, tomate, cebola e alface.",
       "image": "https://images.unsplash.com/photo-1608767221051-2b9d18f35a2f?w=600&auto=format&fit=crop&q=80",
       "addonGroup": "burgers"
     },
@@ -136,7 +146,7 @@
       "name": "X-Salsicha",
       "category": "burgers-tradicionais",
       "price": 15.00,
-      "description": "Pão brioche, salsicha especial, carne bovina, presunto, queijo derretido, tomate, cebola e alface.",
+      "description": "Pão brioche, salsicha especial, carne de hambúrguer, presunto, queijo derretido, tomate, cebola e alface.",
       "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&auto=format&fit=crop&q=80",
       "addonGroup": "burgers"
     },
@@ -145,7 +155,7 @@
       "name": "X-Tudo",
       "category": "burgers-tradicionais",
       "price": 20.00,
-      "description": "Pão brioche recheado ao extremo com carne bovina, bacon crocante, calabresa, salsicha, presunto, queijo derretido, tomate, cebola e alface.",
+      "description": "Pão brioche recheado ao extremo com carne de hambúrguer, bacon crocante, calabresa, salsicha, presunto, queijo derretido, tomate, cebola e alface.",
       "image": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&auto=format&fit=crop&q=80",
       "badge": "Com Tudo",
       "addonGroup": "burgers"
