@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Flame, Utensils, Sparkles, Package, ShoppingBag, CupSoda, IceCream, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Flame, Utensils, Sparkles, Package, ShoppingBag, CupSoda, IceCream, Cake, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Category } from '../types';
 
 interface CategoryNavProps {
@@ -31,6 +31,8 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
         return <CupSoda className="w-4 h-4 shrink-0" />;
       case 'IceCream':
         return <IceCream className="w-4 h-4 shrink-0" />;
+      case 'Cake':
+        return <Cake className="w-4 h-4 shrink-0" />;
       case 'Utensils':
       default:
         return <Utensils className="w-4 h-4 shrink-0" />;

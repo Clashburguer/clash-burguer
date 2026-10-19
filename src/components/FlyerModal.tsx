@@ -200,6 +200,23 @@ export const FlyerModal: React.FC<FlyerModalProps> = ({
             </div>
           </div>
 
+          {/* Doces & Bolos */}
+          <div className="bg-zinc-900/80 p-4 rounded-2xl border border-pink-500/20">
+            <h4 className="text-pink-400 font-extrabold uppercase tracking-wider mb-2.5 text-sm flex items-center justify-between">
+              <span>DOCES & BOLOS</span>
+              <span className="text-[10px] text-zinc-400">Sobremesas</span>
+            </h4>
+            <div className="space-y-2 divide-y divide-zinc-800">
+              <div className="flex justify-between pt-1">
+                <div>
+                  <strong className="text-white">Bolo Simples</strong>
+                  <p className="text-zinc-400 text-[11px]">Fatia de bolo caseiro macio e fofinho</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 6,00</span>
+              </div>
+            </div>
+          </div>
+
           {/* Social info */}
           <div className="flex items-center justify-between p-3 rounded-2xl bg-pink-500/10 border border-pink-500/20">
             <div className="flex items-center gap-2">

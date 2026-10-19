@@ -56,12 +56,20 @@
       "subtitle": "Geladas",
       "icon": "CupSoda",
       "description": "Sucos naturais da fruta, refrigerantes e água mineral"
+    },
+    {
+      "id": "doces-bolos",
+      "name": "Doces & Bolos",
+      "subtitle": "Sobremesas",
+      "icon": "Cake",
+      "description": "Fatias de bolos caseiros fresquinhos e sobremesas deliciosas"
     }
   ],
   "addons": {
     "burgers": [],
     "kikao": [],
-    "sides": []
+    "sides": [],
+    "doces-bolos": []
   },
   "products": [
     {
@@ -327,6 +335,16 @@
       "price": 3.00,
       "description": "Garrafinha de 300ml sem gás bem gelada.",
       "image": "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80"
+    },
+    {
+      "id": "bolo-simples",
+      "name": "Bolo Simples",
+      "category": "doces-bolos",
+      "price": 6.00,
+      "description": "Fatia generosa de bolo caseiro macio, fofinho e quentinho, perfeito para acompanhar ou finalizar o seu pedido.",
+      "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+      "badge": "Caseiro",
+      "addonGroup": "doces-bolos"
     }
   ]
 }
