@@ -14,14 +14,22 @@ export function buildWhatsAppMessage(
   deliveryFee: number,
   discount: number = 0
 ): string {
+  const isMesa = customer.deliveryType === 'mesa' || !!customer.tableNumber;
+  const tableDisplay = customer.tableNumber || '01';
   const subtotal = cart.reduce((acc, item) => acc + item.itemTotalPrice, 0);
-  const actualDeliveryFee = customer.deliveryType === 'delivery' ? deliveryFee : 0;
+  const actualDeliveryFee = (!isMesa && customer.deliveryType === 'delivery') ? deliveryFee : 0;
   const grandTotal = Math.max(0, subtotal + actualDeliveryFee - discount);
   const orderId = Math.floor(1000 + Math.random() * 9000);
   const dateStr = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-  let text = `🍔 *NOVO PEDIDO #${orderId} - CLASH BURGUER* 🍔\n`;
-  text += `⏰ Horário: ${dateStr}\n`;
+  // Identification based on order mode
+  let text = '';
+  if (isMesa) {
+    text += `🍔 *PEDIDO NA MESA | Mesa: ${tableDisplay}*\n`;
+  } else {
+    text += `🛵 *PEDIDO DELIVERY*\n`;
+  }
+  text += `⏰ Horário: ${dateStr} • #${orderId}\n`;
   
   const currentHour = new Date().getHours();
   if (currentHour < 16 || currentHour >= 23) {
@@ -29,22 +37,32 @@ export function buildWhatsAppMessage(
   }
   text += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
-  text += `👤 *DADOS DO CLIENTE*\n`;
-  text += `• Nome: *${customer.name.trim()}*\n`;
-  text += `• Contato: *${customer.phone.trim()}*\n`;
-  text += `• Tipo: *${customer.deliveryType === 'delivery' ? '🛵 ENTREGA EM DOMICÍLIO' : '🏬 RETIRADA NO BALCÃO'}*\n\n`;
-
-  if (customer.deliveryType === 'delivery') {
-    text += `📍 *ENDEREÇO DE ENTREGA*\n`;
-    text += `• Bairro: ${customer.neighborhood.trim()}\n`;
-    text += `• Rua/Av: ${customer.street.trim()}, Nº ${customer.number.trim()}\n`;
-    if (customer.complement.trim()) {
-      text += `• Complemento: ${customer.complement.trim()}\n`;
-    }
-    if (customer.reference.trim()) {
-      text += `• Ponto de Referência: ${customer.reference.trim()}\n`;
+  if (isMesa) {
+    text += `👤 *DADOS DO PEDIDO NA MESA*\n`;
+    text += `• Identificação: *🍔 PEDIDO NA MESA | Mesa: ${tableDisplay}*\n`;
+    text += `• Cliente: *${customer.name.trim()}*\n`;
+    if (customer.phone && customer.phone.trim()) {
+      text += `• Contato: *${customer.phone.trim()}*\n`;
     }
     text += `\n`;
+  } else {
+    text += `👤 *DADOS DO CLIENTE*\n`;
+    text += `• Nome: *${customer.name.trim()}*\n`;
+    text += `• Contato: *${customer.phone.trim()}*\n`;
+    text += `• Modalidade: *${customer.deliveryType === 'delivery' ? '🛵 PEDIDO DELIVERY' : '🏬 RETIRADA NO BALCÃO'}*\n\n`;
+
+    if (customer.deliveryType === 'delivery') {
+      text += `📍 *ENDEREÇO DE ENTREGA*\n`;
+      text += `• Bairro: ${customer.neighborhood.trim()}\n`;
+      text += `• Rua/Av: ${customer.street.trim()}, Nº ${customer.number.trim()}\n`;
+      if (customer.complement.trim()) {
+        text += `• Complemento: ${customer.complement.trim()}\n`;
+      }
+      if (customer.reference.trim()) {
+        text += `• Ponto de Referência: ${customer.reference.trim()}\n`;
+      }
+      text += `\n`;
+    }
   }
 
   text += `📋 *ITENS DO PEDIDO*\n`;
@@ -69,7 +87,9 @@ export function buildWhatsAppMessage(
   text += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
   text += `💰 *RESUMO DE VALORES*\n`;
   text += `• Subtotal dos itens: ${formatCurrency(subtotal)}\n`;
-  if (customer.deliveryType === 'delivery') {
+  if (isMesa) {
+    text += `• Taxa de entrega: Grátis (Consumo no Local)\n`;
+  } else if (customer.deliveryType === 'delivery') {
     text += `• Taxa de entrega: ${formatCurrency(actualDeliveryFee)}\n`;
   } else {
     text += `• Taxa de entrega: Grátis (Retirada)\n`;
@@ -85,10 +105,14 @@ export function buildWhatsAppMessage(
       text += `• PIX (Chave: ${restaurant.pixKey})\n`;
       break;
     case 'credit':
-      text += `• Cartão de Crédito (Levar maquininha)\n`;
+      text += isMesa 
+        ? `• Cartão de Crédito (Pagamento na mesa/balcão)\n` 
+        : `• Cartão de Crédito (Levar maquininha)\n`;
       break;
     case 'debit':
-      text += `• Cartão de Débito (Levar maquininha)\n`;
+      text += isMesa 
+        ? `• Cartão de Débito (Pagamento na mesa/balcão)\n` 
+        : `• Cartão de Débito (Levar maquininha)\n`;
       break;
     case 'cash':
       text += `• Dinheiro`;

@@ -47,6 +47,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <p className="text-xs sm:text-sm text-gray-500 mt-1.5 line-clamp-3 leading-relaxed">
             {product.description}
           </p>
+          {product.flavors && product.flavors.length > 0 && (
+            <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-bold text-pink-700 bg-pink-50 px-2.5 py-0.5 rounded-full border border-pink-100/80">
+                Sabores: {product.flavors.join(' ou ')}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

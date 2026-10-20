@@ -20,14 +20,20 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
+  const [selectedFlavor, setSelectedFlavor] = useState<string>('');
   const [notes, setNotes] = useState('');
 
   // Reset state when modal opens for a new product
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && product) {
       setQuantity(1);
       setSelectedAddons([]);
       setNotes('');
+      if (product.flavors && product.flavors.length > 0) {
+        setSelectedFlavor(product.flavors[0]);
+      } else {
+        setSelectedFlavor('');
+      }
     }
   }, [isOpen, product]);
 
@@ -53,7 +59,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const totalPrice = singleItemPrice * quantity;
 
   const handleConfirm = () => {
-    onAddToCart(product, quantity, selectedAddons, notes);
+    const customizedProduct = selectedFlavor
+      ? { ...product, name: `${product.name} (${selectedFlavor})` }
+      : product;
+    onAddToCart(customizedProduct, quantity, selectedAddons, notes);
     onClose();
   };
 
@@ -98,6 +107,52 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               {formatCurrency(product.price)}
             </span>
           </div>
+
+          {/* Flavor Selection (e.g. Suco de Maracujá ou Acerola) */}
+          {product.flavors && product.flavors.length > 0 && (
+            <div className="bg-pink-50/50 p-4 rounded-2xl border border-pink-100/80">
+              <div className="flex items-center justify-between mb-2.5">
+                <div>
+                  <h4 className="text-sm font-extrabold text-gray-900 flex items-center gap-1.5">
+                    <span>Escolha o Sabor do Suco</span>
+                    <span className="text-[10px] font-bold text-pink-600 bg-pink-100 px-2 py-0.5 rounded-full uppercase">
+                      Obrigatório
+                    </span>
+                  </h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Selecione uma das opções:</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                {product.flavors.map((flavor) => {
+                  const isSelected = selectedFlavor === flavor;
+                  return (
+                    <button
+                      key={flavor}
+                      type="button"
+                      onClick={() => setSelectedFlavor(flavor)}
+                      className={`p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-pink-600 bg-white text-pink-900 font-extrabold shadow-xs ring-2 ring-pink-500/20'
+                          : 'border-pink-200/70 bg-white/80 hover:border-pink-300 text-gray-700 font-semibold'
+                      }`}
+                    >
+                      <span className="text-sm sm:text-base">{flavor}</span>
+                      <div
+                        className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                          isSelected
+                            ? 'bg-pink-600 border-pink-600 text-white'
+                            : 'border-gray-300 bg-white'
+                        }`}
+                      >
+                        {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Add-ons Section */}
           {addonsList.length > 0 && (
@@ -151,15 +206,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Notes Section */}
           <div>
             <label className="block text-sm font-extrabold text-gray-900 mb-1">
-              Observações do Lanche
+              {product.category === 'bebidas' ? 'Observações da Bebida' : 'Observações do Pedido'}
             </label>
             <p className="text-[11px] text-gray-500 mb-2">
-              Ex: "Sem cebola", "Ponto da carne bem passado", "Maionese à parte", etc.
+              {product.category === 'bebidas'
+                ? 'Ex: "Pouco gelo", "Sem açúcar", "Bem gelado", etc.'
+                : 'Ex: "Sem cebola", "Ponto da carne bem passado", "Maionese à parte", etc.'}
             </p>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Alguma preferência ou restrição alimentar?"
+              placeholder="Alguma preferência ou restrição?"
               rows={2}
               maxLength={150}
               className="w-full p-3 rounded-2xl border border-pink-100 bg-pink-50/30 text-xs sm:text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 outline-hidden transition-all resize-none"

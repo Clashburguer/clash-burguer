@@ -1,14 +1,15 @@
 import React from 'react';
-import { Phone, Clock, Bike, Instagram, Heart, FileText } from 'lucide-react';
+import { Phone, Clock, Bike, Instagram, Heart, FileText, QrCode } from 'lucide-react';
 import { RestaurantInfo } from '../types';
 import clashLogo from '../assets/images/clash_burguer_king_princess_logo_1792257605760.jpg';
 
 interface FooterProps {
   restaurant: RestaurantInfo;
   onOpenFlyer: () => void;
+  onOpenQRModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer }) => {
+export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer, onOpenQRModal }) => {
   return (
     <footer className="bg-white border-t border-pink-100 mt-16 pt-12 pb-24 sm:pb-12 text-gray-600">
       <div className="max-w-6xl mx-auto px-4">
@@ -99,14 +100,23 @@ export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer }) => {
               <Phone className="w-3.5 h-3.5" />
               <span>{restaurant.phoneFormatted}</span>
             </a>
-            <div className="pt-1">
+            <div className="pt-2 flex flex-col gap-1.5">
               <button
                 onClick={onOpenFlyer}
                 className="text-xs text-pink-600 hover:underline font-bold inline-flex items-center gap-1 cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>Ver Panfleto Original Clash Burguer</span>
+                <span>Ver Panfleto Digital Clash Burguer</span>
               </button>
+              {onOpenQRModal && (
+                <button
+                  onClick={onOpenQRModal}
+                  className="text-xs text-gray-700 hover:text-pink-600 hover:underline font-bold inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <QrCode className="w-3.5 h-3.5 text-pink-600" />
+                  <span>QR Codes das Mesas (01 a 04)</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

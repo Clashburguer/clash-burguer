@@ -308,9 +308,13 @@
       "name": "Suco Natural (400ml)",
       "category": "bebidas",
       "price": 7.00,
-      "description": "Suco natural e refrescante 400ml feito com polpa natural da fruta. Escolha entre Laranja, Acerola ou Maracujá nas observações.",
+      "description": "Suco natural e refrescante 400ml feito com polpa natural da fruta. Escolha entre Maracujá ou Acerola.",
       "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&auto=format&fit=crop&q=80",
-      "badge": "Refrescante"
+      "badge": "Refrescante",
+      "flavors": [
+        "Maracujá",
+        "Acerola"
+      ]
     },
     {
       "id": "coca-cola-lata",

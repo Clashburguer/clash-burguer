@@ -9,10 +9,12 @@ import { ProductModal } from './components/ProductModal';
 import { CartDrawer } from './components/CartDrawer';
 import { OrderSuccessModal } from './components/OrderSuccessModal';
 import { FlyerModal } from './components/FlyerModal';
+import { TableQRModal } from './components/TableQRModal';
 import { Footer } from './components/Footer';
 import { formatCurrency } from './utils/formatters';
 import { checkStoreStatus, StoreStatus } from './utils/storeHours';
-import { ShoppingBag, ArrowRight, Search, UtensilsCrossed, Clock } from 'lucide-react';
+import { detectTableFromUrl, clearTableSession } from './utils/tableService';
+import { ShoppingBag, ArrowRight, Search, UtensilsCrossed, Clock, AlertTriangle, QrCode } from 'lucide-react';
 
 export default function App() {
   const restaurant = cardapioData.restaurantInfo as RestaurantInfo;
@@ -22,6 +24,48 @@ export default function App() {
 
   // Store open/close status (open 16:00 to 23:00)
   const [storeStatus, setStoreStatus] = useState<StoreStatus>(() => checkStoreStatus());
+
+  // Table (Mesa) origin identification state
+  const [tableNumber, setTableNumber] = useState<string | null>(null);
+  const [tableNotice, setTableNotice] = useState<string | null>(null);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+
+  // Detect table from URL (?origem=mesa&mesa=01) or restore session
+  useEffect(() => {
+    const checkTable = () => {
+      const res = detectTableFromUrl();
+      if (res.isTableOrder && res.tableNumber) {
+        setTableNumber(res.tableNumber);
+        setTableNotice(null);
+      } else if (res.invalidError) {
+        setTableNotice(res.invalidError);
+        setTableNumber(null);
+      } else {
+        setTableNumber(null);
+        setTableNotice(null);
+      }
+    };
+
+    checkTable();
+    window.addEventListener('popstate', checkTable);
+    return () => window.removeEventListener('popstate', checkTable);
+  }, []);
+
+  const handleExitTableMode = () => {
+    clearTableSession();
+    setTableNumber(null);
+    setTableNotice(null);
+  };
+
+  const handleSelectTableForTesting = (table: string) => {
+    sessionStorage.setItem('clash_table_number', table);
+    setTableNumber(table);
+    setTableNotice(null);
+    const url = new URL(window.location.href);
+    url.searchParams.set('origem', 'mesa');
+    url.searchParams.set('mesa', table);
+    window.history.replaceState({}, '', url.toString());
+  };
 
   useEffect(() => {
     // Recheck every 30 seconds
@@ -193,7 +237,59 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onOpenFlyer={() => setIsFlyerOpen(true)}
+        tableNumber={tableNumber}
+        onExitTableMode={handleExitTableMode}
       />
+
+      {/* Invalid Table Notice (if user enters an invalid table number) */}
+      {tableNotice && (
+        <div className="bg-amber-500 text-white py-2.5 px-4 shadow-sm z-30 animate-in fade-in">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 text-xs sm:text-sm font-bold">
+            <span className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-amber-200 shrink-0" />
+              <span>{tableNotice} O site continuará em modo de atendimento normal (Delivery).</span>
+            </span>
+            <button
+              onClick={() => setTableNotice(null)}
+              className="text-xs bg-white/20 hover:bg-white/30 text-white px-2.5 py-0.5 rounded-full cursor-pointer transition-colors"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Active Table (Mesa) Mode Banner */}
+      {tableNumber && (
+        <div className="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 text-white py-2 px-4 shadow-sm z-30">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-2.5 font-black">
+              <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-sm shrink-0">
+                🍔
+              </span>
+              <span>
+                PEDIDO NA MESA • Você está atendido na <strong>Mesa {tableNumber}</strong> (Sem taxa de entrega nem endereço)
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsQRModalOpen(true)}
+                className="text-[11px] bg-white/20 hover:bg-white/30 text-white px-2.5 py-0.5 rounded-full font-bold cursor-pointer transition-colors"
+              >
+                Ver 4 Mesas / QR
+              </button>
+              <button
+                type="button"
+                onClick={handleExitTableMode}
+                className="text-[11px] bg-white text-pink-700 hover:bg-pink-50 px-3 py-0.5 rounded-full font-black shadow-xs cursor-pointer transition-colors"
+              >
+                Mudar para Delivery
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Store Closed Banner (active between 23:00 and 16:00) */}
       {!storeStatus.isOpen && (
@@ -225,6 +321,7 @@ export default function App() {
           restaurant={restaurant}
           onSelectCategory={handleSelectCategory}
           onOpenFlyer={() => setIsFlyerOpen(true)}
+          tableNumber={tableNumber}
         />
       )}
 
@@ -395,6 +492,8 @@ export default function App() {
         onClearCart={handleClearCart}
         restaurant={restaurant}
         storeStatus={storeStatus}
+        tableNumber={tableNumber}
+        onExitTableMode={handleExitTableMode}
         onOrderSuccess={handleOrderSuccess}
       />
 
@@ -415,8 +514,20 @@ export default function App() {
         restaurant={restaurant}
       />
 
+      {/* Mesas 01-04 QR Code Modal */}
+      <TableQRModal
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+        currentTable={tableNumber}
+        onSelectTableForTesting={handleSelectTableForTesting}
+      />
+
       {/* Footer */}
-      <Footer restaurant={restaurant} onOpenFlyer={() => setIsFlyerOpen(true)} />
+      <Footer
+        restaurant={restaurant}
+        onOpenFlyer={() => setIsFlyerOpen(true)}
+        onOpenQRModal={() => setIsQRModalOpen(true)}
+      />
     </div>
   );
 }

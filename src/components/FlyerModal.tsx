@@ -217,6 +217,44 @@ export const FlyerModal: React.FC<FlyerModalProps> = ({
             </div>
           </div>
 
+          {/* Bebidas */}
+          <div className="bg-zinc-900/80 p-4 rounded-2xl border border-pink-500/20">
+            <h4 className="text-pink-400 font-extrabold uppercase tracking-wider mb-2.5 text-sm flex items-center justify-between">
+              <span>BEBIDAS</span>
+              <span className="text-[10px] text-zinc-400">Geladas</span>
+            </h4>
+            <div className="space-y-2 divide-y divide-zinc-800">
+              <div className="flex justify-between pt-1">
+                <div>
+                  <strong className="text-white">Suco Natural (400ml)</strong>
+                  <p className="text-zinc-400 text-[11px]">Sabores: Maracujá ou Acerola</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 7,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">Coca-Cola Lata 350ml</strong>
+                  <p className="text-zinc-400 text-[11px]">Trincando de gelada</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 7,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">Coca-Cola 1 Litro</strong>
+                  <p className="text-zinc-400 text-[11px]">Garrafa 1L bem gelada</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 13,00</span>
+              </div>
+              <div className="flex justify-between pt-2">
+                <div>
+                  <strong className="text-white">Água Mineral de 300ml</strong>
+                  <p className="text-zinc-400 text-[11px]">Garrafinha sem gás gelada</p>
+                </div>
+                <span className="text-pink-400 font-black">R$ 3,00</span>
+              </div>
+            </div>
+          </div>
+
           {/* Social info */}
           <div className="flex items-center justify-between p-3 rounded-2xl bg-pink-500/10 border border-pink-500/20">
             <div className="flex items-center gap-2">

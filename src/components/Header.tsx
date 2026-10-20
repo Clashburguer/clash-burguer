@@ -13,6 +13,8 @@ interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onOpenFlyer?: () => void;
+  tableNumber?: string | null;
+  onExitTableMode?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -23,6 +25,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCart,
   searchQuery,
   onSearchChange,
+  tableNumber,
+  onExitTableMode,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-pink-100 shadow-xs">
@@ -50,9 +54,24 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 font-medium text-pink-100">
-              <Bike className="w-3.5 h-3.5" /> Taxa: R$ {restaurant.deliveryFee.toFixed(2).replace('.', ',')}
-            </span>
+            {tableNumber ? (
+              <span className="flex items-center gap-1.5 font-extrabold bg-white/20 px-2.5 py-0.5 rounded-full text-white">
+                <span>🍔 Atendimento Mesa {tableNumber}</span>
+                {onExitTableMode && (
+                  <button
+                    onClick={onExitTableMode}
+                    className="text-[10px] text-pink-200 hover:text-white underline ml-1 cursor-pointer font-normal"
+                    title="Mudar para delivery normal"
+                  >
+                    (sair)
+                  </button>
+                )}
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 font-medium text-pink-100">
+                <Bike className="w-3.5 h-3.5" /> Taxa: R$ {restaurant.deliveryFee.toFixed(2).replace('.', ',')}
+              </span>
+            )}
             <a
               href={`https://wa.me/${restaurant.whatsappNumber}`}
               target="_blank"
@@ -88,9 +107,15 @@ export const Header: React.FC<HeaderProps> = ({
                   <span>Clash</span>
                   <span className="text-pink-600">Burguer</span>
                 </h1>
-                <span className="bg-pink-100 text-pink-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider hidden sm:inline-block">
-                  Delivery
-                </span>
+                {tableNumber ? (
+                  <span className="bg-gradient-to-r from-pink-600 to-rose-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider inline-flex items-center gap-1 shadow-xs animate-pulse">
+                    <span>🍔 MESA {tableNumber}</span>
+                  </span>
+                ) : (
+                  <span className="bg-pink-100 text-pink-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider hidden sm:inline-block">
+                    Delivery
+                  </span>
+                )}
               </div>
             </div>
           </div>

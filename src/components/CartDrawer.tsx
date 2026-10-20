@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Plus,
@@ -30,6 +30,8 @@ interface CartDrawerProps {
   onClearCart: () => void;
   restaurant: RestaurantInfo;
   storeStatus: StoreStatus;
+  tableNumber?: string | null;
+  onExitTableMode?: () => void;
   onOrderSuccess: (message: string, url: string) => void;
 }
 
@@ -42,12 +44,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onClearCart,
   restaurant,
   storeStatus,
+  tableNumber,
+  onExitTableMode,
   onOrderSuccess,
 }) => {
   const [customer, setCustomer] = useState<CustomerData>({
     name: '',
     phone: '',
-    deliveryType: 'delivery',
+    deliveryType: tableNumber ? 'mesa' : 'delivery',
+    tableNumber: tableNumber || undefined,
     street: '',
     number: '',
     neighborhood: '',
@@ -57,6 +62,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     cashChangeFor: '',
     orderNotes: '',
   });
+
+  // Keep customer in mesa mode if tableNumber is active
+  useEffect(() => {
+    if (tableNumber) {
+      setCustomer((prev) => ({
+        ...prev,
+        deliveryType: 'mesa',
+        tableNumber: tableNumber,
+      }));
+    } else {
+      setCustomer((prev) => ({
+        ...prev,
+        deliveryType: prev.deliveryType === 'mesa' ? 'delivery' : prev.deliveryType,
+        tableNumber: undefined,
+      }));
+    }
+  }, [tableNumber, isOpen]);
 
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountPercent?: number; discountFixed?: number } | null>(null);
@@ -102,24 +124,32 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const validateForm = (): boolean => {
+    const isMesa = customer.deliveryType === 'mesa' || !!tableNumber;
     const errors: Record<string, string> = {};
+
     if (!customer.name.trim()) {
-      errors.name = 'Por favor, informe seu nome';
+      errors.name = isMesa
+        ? 'Por favor, informe seu nome para o pedido na mesa'
+        : 'Por favor, informe seu nome';
     }
-    if (!customer.phone.trim() || customer.phone.replace(/\D/g, '').length < 8) {
-      errors.phone = 'Informe seu telefone / WhatsApp';
+
+    if (!isMesa) {
+      if (!customer.phone.trim() || customer.phone.replace(/\D/g, '').length < 8) {
+        errors.phone = 'Informe seu telefone / WhatsApp';
+      }
+      if (customer.deliveryType === 'delivery') {
+        if (!customer.neighborhood.trim()) {
+          errors.neighborhood = 'Informe o bairro';
+        }
+        if (!customer.street.trim()) {
+          errors.street = 'Informe a rua / avenida';
+        }
+        if (!customer.number.trim()) {
+          errors.number = 'Informe o número';
+        }
+      }
     }
-    if (customer.deliveryType === 'delivery') {
-      if (!customer.neighborhood.trim()) {
-        errors.neighborhood = 'Informe o bairro';
-      }
-      if (!customer.street.trim()) {
-        errors.street = 'Informe a rua / avenida';
-      }
-      if (!customer.number.trim()) {
-        errors.number = 'Informe o número';
-      }
-    }
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -320,75 +350,116 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 ))}
               </div>
 
-              {/* Delivery vs Pickup Selector */}
+              {/* Delivery vs Pickup vs Mesa Selector */}
               <div id="checkout-form-section" className="space-y-3 pt-2">
                 <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
                   Tipo de Pedido
                 </h3>
-                <div className="grid grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, deliveryType: 'delivery' })}
-                    className={`p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer ${
-                      customer.deliveryType === 'delivery'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <Bike
-                        className={`w-5 h-5 ${
-                          customer.deliveryType === 'delivery' ? 'text-pink-600' : 'text-gray-400'
-                        }`}
-                      />
-                      <span className="text-xs font-extrabold text-pink-600">
-                        + {formatCurrency(restaurant.deliveryFee)}
+                {tableNumber || customer.deliveryType === 'mesa' ? (
+                  <div className="p-4 bg-gradient-to-r from-pink-600 via-pink-500 to-rose-500 rounded-3xl text-white shadow-md flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-xl shrink-0">
+                        🍔
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] uppercase font-black tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+                            Consumo no Local
+                          </span>
+                        </div>
+                        <h4 className="text-base sm:text-lg font-black leading-tight mt-0.5">
+                          PEDIDO NA MESA • MESA {customer.tableNumber || tableNumber}
+                        </h4>
+                        <span className="text-[11px] text-pink-100 block">
+                          Seu pedido será servido diretamente nesta mesa
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 shrink-0">
+                      <span className="text-xs font-bold bg-white text-pink-600 px-3 py-1 rounded-full shadow-xs">
+                        Sem taxa
                       </span>
+                      {onExitTableMode && (
+                        <button
+                          type="button"
+                          onClick={onExitTableMode}
+                          className="text-[10px] text-pink-100 hover:text-white underline cursor-pointer"
+                        >
+                          Mudar para delivery
+                        </button>
+                      )}
                     </div>
-                    <span className="text-sm font-extrabold text-gray-900 leading-tight">
-                      Entrega
-                    </span>
-                    <span className="text-[10px] text-gray-500">
-                      Receba quentinho em casa ({restaurant.deliveryTime})
-                    </span>
-                  </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setCustomer({ ...customer, deliveryType: 'delivery' })}
+                      className={`p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer ${
+                        customer.deliveryType === 'delivery'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <Bike
+                          className={`w-5 h-5 ${
+                            customer.deliveryType === 'delivery' ? 'text-pink-600' : 'text-gray-400'
+                          }`}
+                        />
+                        <span className="text-xs font-extrabold text-pink-600">
+                          + {formatCurrency(restaurant.deliveryFee)}
+                        </span>
+                      </div>
+                      <span className="text-sm font-extrabold text-gray-900 leading-tight">
+                        Entrega
+                      </span>
+                      <span className="text-[10px] text-gray-500">
+                        Receba quentinho em casa ({restaurant.deliveryTime})
+                      </span>
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, deliveryType: 'pickup' })}
-                    className={`p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer ${
-                      customer.deliveryType === 'pickup'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <Store
-                        className={`w-5 h-5 ${
-                          customer.deliveryType === 'pickup' ? 'text-pink-600' : 'text-gray-400'
-                        }`}
-                      />
-                      <span className="text-xs font-extrabold text-emerald-600">Grátis</span>
-                    </div>
-                    <span className="text-sm font-extrabold text-gray-900 leading-tight">
-                      Retirada
-                    </span>
-                    <span className="text-[10px] text-gray-500">
-                      Retire direto no nosso balcão
-                    </span>
-                  </button>
-                </div>
+                    <button
+                      type="button"
+                      onClick={() => setCustomer({ ...customer, deliveryType: 'pickup' })}
+                      className={`p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer ${
+                        customer.deliveryType === 'pickup'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <Store
+                          className={`w-5 h-5 ${
+                            customer.deliveryType === 'pickup' ? 'text-pink-600' : 'text-gray-400'
+                          }`}
+                        />
+                        <span className="text-xs font-extrabold text-emerald-600">Grátis</span>
+                      </div>
+                      <span className="text-sm font-extrabold text-gray-900 leading-tight">
+                        Retirada
+                      </span>
+                      <span className="text-[10px] text-gray-500">
+                        Retire direto no nosso balcão
+                      </span>
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Customer and Address Information */}
               <div className="space-y-3 bg-gray-50/80 p-4 rounded-3xl border border-pink-100">
                 <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">
-                  Dados para Contato
+                  {tableNumber || customer.deliveryType === 'mesa'
+                    ? 'Identificação para Atendimento'
+                    : 'Dados para Contato'}
                 </h3>
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    Seu Nome Completo *
+                    {tableNumber || customer.deliveryType === 'mesa'
+                      ? 'Seu Nome (para entrega na mesa) *'
+                      : 'Seu Nome Completo *'}
                   </label>
                   <input
                     type="text"
@@ -411,7 +482,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    WhatsApp para Contato *
+                    {tableNumber || customer.deliveryType === 'mesa'
+                      ? 'WhatsApp (opcional)'
+                      : 'WhatsApp para Contato *'}
                   </label>
                   <input
                     type="tel"
@@ -745,7 +818,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="flex justify-between text-gray-500">
                 <span>Taxa de Entrega</span>
                 <span className="font-bold text-gray-800">
-                  {customer.deliveryType === 'delivery' ? formatCurrency(deliveryFee) : 'Grátis'}
+                  {tableNumber || customer.deliveryType === 'mesa'
+                    ? `Grátis (Mesa ${tableNumber || customer.tableNumber || '01'})`
+                    : customer.deliveryType === 'delivery'
+                      ? formatCurrency(deliveryFee)
+                      : 'Grátis (Retirada)'}
                 </span>
               </div>
               {discountAmount > 0 && (
@@ -771,9 +848,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               }`}
             >
               <span>
-                {storeStatus.isOpen
-                  ? 'Finalizar Pedido no WhatsApp'
-                  : 'Enviar Pedido para as 16h no WhatsApp'}
+                {tableNumber || customer.deliveryType === 'mesa'
+                  ? storeStatus.isOpen
+                    ? `🍔 PEDIDO NA MESA | Mesa: ${tableNumber || customer.tableNumber || '01'}`
+                    : `🍔 PEDIDO NA MESA | Mesa: ${tableNumber || customer.tableNumber || '01'} (Abre 16h)`
+                  : storeStatus.isOpen
+                    ? '🛵 PEDIDO DELIVERY'
+                    : '🛵 PEDIDO DELIVERY (Abre 16h)'}
               </span>
               <ArrowRight className="w-5 h-5" />
             </button>

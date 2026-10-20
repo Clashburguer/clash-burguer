@@ -13,6 +13,7 @@ export interface Product {
   image: string;
   badge?: string;
   addonGroup?: 'burgers' | 'kikao' | 'sides';
+  flavors?: string[];
 }
 
 export interface Category {
@@ -55,7 +56,7 @@ export interface CartItem {
   itemTotalPrice: number;
 }
 
-export type DeliveryType = 'delivery' | 'pickup';
+export type DeliveryType = 'delivery' | 'pickup' | 'mesa';
 
 export type PaymentMethod = 'pix' | 'credit' | 'debit' | 'cash';
 
@@ -63,6 +64,7 @@ export interface CustomerData {
   name: string;
   phone: string;
   deliveryType: DeliveryType;
+  tableNumber?: string;
   street: string;
   number: string;
   neighborhood: string;
