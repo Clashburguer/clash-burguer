@@ -40,7 +40,9 @@ export function buildWhatsAppMessage(
   if (isMesa) {
     text += `👤 *DADOS DO PEDIDO NA MESA*\n`;
     text += `• Identificação: *🍔 PEDIDO NA MESA | Mesa: ${tableDisplay}*\n`;
-    text += `• Cliente: *${customer.name.trim()}*\n`;
+    if (customer.name && customer.name.trim()) {
+      text += `• Cliente: *${customer.name.trim()}*\n`;
+    }
     if (customer.phone && customer.phone.trim()) {
       text += `• Contato: *${customer.phone.trim()}*\n`;
     }
@@ -99,29 +101,29 @@ export function buildWhatsAppMessage(
   }
   text += `• *TOTAL DO PEDIDO: ${formatCurrency(grandTotal)}*\n\n`;
 
-  text += `💳 *FORMA DE PAGAMENTO*\n`;
-  switch (customer.paymentMethod) {
-    case 'pix':
-      text += `• PIX (Chave: ${restaurant.pixKey})\n`;
-      break;
-    case 'credit':
-      text += isMesa 
-        ? `• Cartão de Crédito (Pagamento na mesa/balcão)\n` 
-        : `• Cartão de Crédito (Levar maquininha)\n`;
-      break;
-    case 'debit':
-      text += isMesa 
-        ? `• Cartão de Débito (Pagamento na mesa/balcão)\n` 
-        : `• Cartão de Débito (Levar maquininha)\n`;
-      break;
-    case 'cash':
-      text += `• Dinheiro`;
-      if (customer.cashChangeFor && customer.cashChangeFor.trim()) {
-        text += ` (Troco para ${customer.cashChangeFor.trim()})\n`;
-      } else {
-        text += ` (Não precisa de troco)\n`;
-      }
-      break;
+  if (isMesa) {
+    text += `💳 *PAGAMENTO*\n• Pagamento direto no local (Mesa / Balcão)\n`;
+  } else {
+    text += `💳 *FORMA DE PAGAMENTO*\n`;
+    switch (customer.paymentMethod) {
+      case 'pix':
+        text += `• PIX (Chave: ${restaurant.pixKey})\n`;
+        break;
+      case 'credit':
+        text += `• Cartão de Crédito (Levar maquininha)\n`;
+        break;
+      case 'debit':
+        text += `• Cartão de Débito (Levar maquininha)\n`;
+        break;
+      case 'cash':
+        text += `• Dinheiro`;
+        if (customer.cashChangeFor && customer.cashChangeFor.trim()) {
+          text += ` (Troco para ${customer.cashChangeFor.trim()})\n`;
+        } else {
+          text += ` (Não precisa de troco)\n`;
+        }
+        break;
+    }
   }
 
   if (customer.orderNotes && customer.orderNotes.trim()) {

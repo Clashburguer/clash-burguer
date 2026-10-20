@@ -127,13 +127,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     const isMesa = customer.deliveryType === 'mesa' || !!tableNumber;
     const errors: Record<string, string> = {};
 
-    if (!customer.name.trim()) {
-      errors.name = isMesa
-        ? 'Por favor, informe seu nome para o pedido na mesa'
-        : 'Por favor, informe seu nome';
-    }
-
     if (!isMesa) {
+      if (!customer.name.trim()) {
+        errors.name = 'Por favor, informe seu nome';
+      }
       if (!customer.phone.trim() || customer.phone.replace(/\D/g, '').length < 8) {
         errors.phone = 'Informe seu telefone / WhatsApp';
       }
@@ -375,20 +372,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </span>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1 shrink-0">
-                      <span className="text-xs font-bold bg-white text-pink-600 px-3 py-1 rounded-full shadow-xs">
-                        Sem taxa
-                      </span>
-                      {onExitTableMode && (
+                    {onExitTableMode && (
+                      <div className="flex items-center shrink-0">
                         <button
                           type="button"
                           onClick={onExitTableMode}
-                          className="text-[10px] text-pink-100 hover:text-white underline cursor-pointer"
+                          className="text-[11px] bg-white text-pink-700 hover:bg-pink-50 px-3 py-1 rounded-full font-black shadow-xs cursor-pointer transition-colors"
                         >
                           Mudar para delivery
                         </button>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2.5">
@@ -447,19 +441,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 )}
               </div>
 
-              {/* Customer and Address Information */}
-              <div className="space-y-3 bg-gray-50/80 p-4 rounded-3xl border border-pink-100">
-                <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">
-                  {tableNumber || customer.deliveryType === 'mesa'
-                    ? 'Identificação para Atendimento'
-                    : 'Dados para Contato'}
-                </h3>
+              {/* Customer and Address Information (Ocultado em Pedidos na Mesa) */}
+              {!(tableNumber || customer.deliveryType === 'mesa') && (
+                <div className="space-y-3 bg-gray-50/80 p-4 rounded-3xl border border-pink-100">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-gray-500">
+                    Dados para Contato
+                  </h3>
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    {tableNumber || customer.deliveryType === 'mesa'
-                      ? 'Seu Nome (para entrega na mesa) *'
-                      : 'Seu Nome Completo *'}
+                    Seu Nome Completo *
                   </label>
                   <input
                     type="text"
@@ -482,9 +473,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-1">
-                    {tableNumber || customer.deliveryType === 'mesa'
-                      ? 'WhatsApp (opcional)'
-                      : 'WhatsApp para Contato *'}
+                    WhatsApp para Contato *
                   </label>
                   <input
                     type="tel"
@@ -611,143 +600,146 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                 )}
               </div>
+              )}
 
-              {/* Payment Method Selector */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
-                  Forma de Pagamento
-                </h3>
+              {/* Payment Method Selector (Ocultado em Pedidos na Mesa) */}
+              {!(tableNumber || customer.deliveryType === 'mesa') && (
+                <div className="space-y-3">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
+                    Forma de Pagamento
+                  </h3>
 
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, paymentMethod: 'pix' })}
-                    className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
-                      customer.paymentMethod === 'pix'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <QrCode
-                      className={`w-5 h-5 ${
-                        customer.paymentMethod === 'pix' ? 'text-pink-600' : 'text-gray-400'
-                      }`}
-                    />
-                    <div className="leading-tight">
-                      <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
-                        PIX
-                      </span>
-                      <span className="text-[10px] text-pink-600 font-bold">Mais Rápido</span>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, paymentMethod: 'credit' })}
-                    className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
-                      customer.paymentMethod === 'credit'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <CreditCard
-                      className={`w-5 h-5 ${
-                        customer.paymentMethod === 'credit' ? 'text-pink-600' : 'text-gray-400'
-                      }`}
-                    />
-                    <div className="leading-tight">
-                      <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
-                        Crédito
-                      </span>
-                      <span className="text-[10px] text-gray-500">Na entrega</span>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, paymentMethod: 'debit' })}
-                    className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
-                      customer.paymentMethod === 'debit'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <CreditCard
-                      className={`w-5 h-5 ${
-                        customer.paymentMethod === 'debit' ? 'text-pink-600' : 'text-gray-400'
-                      }`}
-                    />
-                    <div className="leading-tight">
-                      <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
-                        Débito
-                      </span>
-                      <span className="text-[10px] text-gray-500">Na entrega</span>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setCustomer({ ...customer, paymentMethod: 'cash' })}
-                    className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
-                      customer.paymentMethod === 'cash'
-                        ? 'border-pink-500 bg-pink-50/80 shadow-xs'
-                        : 'border-gray-200 bg-white hover:border-pink-200'
-                    }`}
-                  >
-                    <Banknote
-                      className={`w-5 h-5 ${
-                        customer.paymentMethod === 'cash' ? 'text-pink-600' : 'text-gray-400'
-                      }`}
-                    />
-                    <div className="leading-tight">
-                      <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
-                        Dinheiro
-                      </span>
-                      <span className="text-[10px] text-gray-500">Com ou sem troco</span>
-                    </div>
-                  </button>
-                </div>
-
-                {/* Sub-options for payment */}
-                {customer.paymentMethod === 'pix' && (
-                  <div className="p-3 bg-pink-50/80 rounded-2xl border border-pink-200 flex items-center justify-between gap-2">
-                    <div>
-                      <span className="text-[11px] text-gray-500 block">Chave PIX da Loja ({restaurant.pixKeyType}):</span>
-                      <span className="text-xs font-black text-pink-700">{restaurant.pixKey}</span>
-                    </div>
+                  <div className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
-                      onClick={handleCopyPixKey}
-                      className="px-3 py-1.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold flex items-center gap-1 shadow-xs cursor-pointer transition-all shrink-0"
+                      onClick={() => setCustomer({ ...customer, paymentMethod: 'pix' })}
+                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        customer.paymentMethod === 'pix'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
                     >
-                      {copiedPix ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" /> Copiado!
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" /> Copiar Chave
-                        </>
-                      )}
+                      <QrCode
+                        className={`w-5 h-5 ${
+                          customer.paymentMethod === 'pix' ? 'text-pink-600' : 'text-gray-400'
+                        }`}
+                      />
+                      <div className="leading-tight">
+                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
+                          PIX
+                        </span>
+                        <span className="text-[10px] text-pink-600 font-bold">Mais Rápido</span>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setCustomer({ ...customer, paymentMethod: 'credit' })}
+                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        customer.paymentMethod === 'credit'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
+                    >
+                      <CreditCard
+                        className={`w-5 h-5 ${
+                          customer.paymentMethod === 'credit' ? 'text-pink-600' : 'text-gray-400'
+                        }`}
+                      />
+                      <div className="leading-tight">
+                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
+                          Crédito
+                        </span>
+                        <span className="text-[10px] text-gray-500">Na entrega</span>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setCustomer({ ...customer, paymentMethod: 'debit' })}
+                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        customer.paymentMethod === 'debit'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
+                    >
+                      <CreditCard
+                        className={`w-5 h-5 ${
+                          customer.paymentMethod === 'debit' ? 'text-pink-600' : 'text-gray-400'
+                        }`}
+                      />
+                      <div className="leading-tight">
+                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
+                          Débito
+                        </span>
+                        <span className="text-[10px] text-gray-500">Na entrega</span>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setCustomer({ ...customer, paymentMethod: 'cash' })}
+                      className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all cursor-pointer ${
+                        customer.paymentMethod === 'cash'
+                          ? 'border-pink-500 bg-pink-50/80 shadow-xs'
+                          : 'border-gray-200 bg-white hover:border-pink-200'
+                      }`}
+                    >
+                      <Banknote
+                        className={`w-5 h-5 ${
+                          customer.paymentMethod === 'cash' ? 'text-pink-600' : 'text-gray-400'
+                        }`}
+                      />
+                      <div className="leading-tight">
+                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 block">
+                          Dinheiro
+                        </span>
+                        <span className="text-[10px] text-gray-500">Com ou sem troco</span>
+                      </div>
                     </button>
                   </div>
-                )}
 
-                {customer.paymentMethod === 'cash' && (
-                  <div className="p-3 bg-gray-50 rounded-2xl border border-gray-200">
-                    <label className="block text-xs font-bold text-gray-700 mb-1">
-                      Precisa de troco? Para quanto?
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ex: Troco para R$ 50,00 ou Não preciso"
-                      value={customer.cashChangeFor}
-                      onChange={(e) => setCustomer({ ...customer, cashChangeFor: e.target.value })}
-                      className="w-full p-2 bg-white text-xs sm:text-sm rounded-xl border border-gray-200 focus:border-pink-500 outline-hidden"
-                    />
-                  </div>
-                )}
-              </div>
+                  {/* Sub-options for payment */}
+                  {customer.paymentMethod === 'pix' && (
+                    <div className="p-3 bg-pink-50/80 rounded-2xl border border-pink-200 flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-[11px] text-gray-500 block">Chave PIX da Loja ({restaurant.pixKeyType}):</span>
+                        <span className="text-xs font-black text-pink-700">{restaurant.pixKey}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleCopyPixKey}
+                        className="px-3 py-1.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold flex items-center gap-1 shadow-xs cursor-pointer transition-all shrink-0"
+                      >
+                        {copiedPix ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" /> Copiado!
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" /> Copiar Chave
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+
+                  {customer.paymentMethod === 'cash' && (
+                    <div className="p-3 bg-gray-50 rounded-2xl border border-gray-200">
+                      <label className="block text-xs font-bold text-gray-700 mb-1">
+                        Precisa de troco? Para quanto?
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ex: Troco para R$ 50,00 ou Não preciso"
+                        value={customer.cashChangeFor}
+                        onChange={(e) => setCustomer({ ...customer, cashChangeFor: e.target.value })}
+                        className="w-full p-2 bg-white text-xs sm:text-sm rounded-xl border border-gray-200 focus:border-pink-500 outline-hidden"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Coupon Code */}
               <div className="space-y-2">
