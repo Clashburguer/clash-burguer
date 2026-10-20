@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer, onOpenQ
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-gray-500 max-w-sm leading-relaxed">
-              Os melhores hambúrgueres artesanais smash no pão brioche amanteigado e a tradição inconfundível do Kikão manauara. Peça pelo cardápio digital e receba rapidinho!
+              Os melhores hambúrgueres artesanais smash no pão brioche amanteigado e a tradição inconfundível do Kikão teféense. Peça pelo cardápio digital e receba rapidinho!
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <a

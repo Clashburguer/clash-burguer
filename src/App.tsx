@@ -262,27 +262,20 @@ export default function App() {
       {/* Active Table (Mesa) Mode Banner */}
       {tableNumber && (
         <div className="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-700 text-white py-2 px-4 shadow-sm z-30">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm">
-            <div className="flex items-center gap-2.5 font-black">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 font-black">
               <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-sm shrink-0">
                 🍔
               </span>
-              <span>
-                PEDIDO NA MESA • Você está atendido na <strong>Mesa {tableNumber}</strong> (Sem taxa de entrega nem endereço)
+              <span className="text-sm font-black">
+                Pedido da mesa {tableNumber ? parseInt(tableNumber, 10) : '1'}
               </span>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => setIsQRModalOpen(true)}
-                className="text-[11px] bg-white/20 hover:bg-white/30 text-white px-2.5 py-0.5 rounded-full font-bold cursor-pointer transition-colors"
-              >
-                Ver 4 Mesas / QR
-              </button>
+            <div className="flex items-center shrink-0">
               <button
                 type="button"
                 onClick={handleExitTableMode}
-                className="text-[11px] bg-white text-pink-700 hover:bg-pink-50 px-3 py-0.5 rounded-full font-black shadow-xs cursor-pointer transition-colors"
+                className="text-[11px] bg-white text-pink-700 hover:bg-pink-50 px-3 py-1 rounded-full font-black shadow-xs cursor-pointer transition-colors"
               >
                 Mudar para Delivery
               </button>

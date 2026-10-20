@@ -47,10 +47,14 @@ export const Header: React.FC<HeaderProps> = ({
                 </>
               )}
             </span>
-            <span className="hidden sm:inline-block text-pink-100">|</span>
-            <span className="hidden sm:flex items-center gap-1 text-pink-50">
-              <Clock className="w-3.5 h-3.5" /> {restaurant.deliveryTime}
-            </span>
+            {!tableNumber && (
+              <>
+                <span className="hidden sm:inline-block text-pink-100">|</span>
+                <span className="hidden sm:flex items-center gap-1 text-pink-50">
+                  <Clock className="w-3.5 h-3.5" /> {restaurant.deliveryTime}
+                </span>
+              </>
+            )}
           </div>
           
           <div className="flex items-center gap-3">

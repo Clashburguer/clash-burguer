@@ -35,7 +35,7 @@ export const Hero: React.FC<HeroProps> = ({ restaurant, onSelectCategory, onOpen
           </div>
 
           {/* Quick feature pill cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+          <div className={`grid grid-cols-2 ${tableNumber ? 'sm:grid-cols-3' : 'sm:grid-cols-4'} gap-2.5 pt-1`}>
             <div className="bg-white p-3 rounded-2xl border border-pink-100 shadow-xs flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
                 {tableNumber ? <span className="text-base font-black">🍔</span> : <Bike className="w-5 h-5" />}
@@ -50,15 +50,18 @@ export const Hero: React.FC<HeroProps> = ({ restaurant, onSelectCategory, onOpen
               </div>
             </div>
 
-            <div className="bg-white p-3 rounded-2xl border border-pink-100 shadow-xs flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
-                <Clock className="w-5 h-5" />
+            {/* Ocultado quando for pedido nas mesas */}
+            {!tableNumber && (
+              <div className="bg-white p-3 rounded-2xl border border-pink-100 shadow-xs flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[11px] text-gray-400 block font-medium leading-none">Tempo médio</span>
+                  <span className="text-sm font-extrabold text-gray-900 leading-tight">{restaurant.deliveryTime}</span>
+                </div>
               </div>
-              <div>
-                <span className="text-[11px] text-gray-400 block font-medium leading-none">Tempo médio</span>
-                <span className="text-sm font-extrabold text-gray-900 leading-tight">{restaurant.deliveryTime}</span>
-              </div>
-            </div>
+            )}
 
             <div className="bg-white p-3 rounded-2xl border border-pink-100 shadow-xs flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
