@@ -13,7 +13,6 @@ import {
   Copy,
   Check,
   AlertCircle,
-  Tag,
   ShoppingBag,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -80,44 +79,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
   }, [tableNumber, isOpen]);
 
-  const [couponCode, setCouponCode] = useState('');
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountPercent?: number; discountFixed?: number } | null>(null);
-  const [couponError, setCouponError] = useState('');
-  const [copiedPix, setCopiedPix] = useState(false);
+  const [copiedPix, setCopiedPix] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   if (!isOpen) return null;
 
   const subtotal = cart.reduce((sum, item) => sum + item.itemTotalPrice, 0);
   const deliveryFee = customer.deliveryType === 'delivery' ? restaurant.deliveryFee : 0;
-  
-  let discountAmount = 0;
-  if (appliedCoupon) {
-    if (appliedCoupon.discountPercent) {
-      discountAmount = (subtotal * appliedCoupon.discountPercent) / 100;
-    } else if (appliedCoupon.discountFixed) {
-      discountAmount = Math.min(subtotal, appliedCoupon.discountFixed);
-    }
-  }
-
-  const grandTotal = Math.max(0, subtotal + deliveryFee - discountAmount);
-
-  const handleApplyCoupon = () => {
-    setCouponError('');
-    const code = couponCode.trim().toUpperCase();
-    if (!code) return;
-
-    if (code === 'CLASH10') {
-      setAppliedCoupon({ code, discountPercent: 10 });
-    } else if (code === 'BEMVINDO') {
-      setAppliedCoupon({ code, discountFixed: 5 });
-    } else {
-      setCouponError('Cupom inválido ou expirado. Tente "CLASH10"');
-    }
-  };
+  const grandTotal = Math.max(0, subtotal + deliveryFee);
 
   const handleCopyPixKey = () => {
-    const textToCopy = restaurant.pixKey.replace(/\s|-/g, '');
+    const textToCopy = restaurant.pixKey.trim();
     navigator.clipboard.writeText(textToCopy);
     setCopiedPix(true);
     setTimeout(() => setCopiedPix(false), 2500);
@@ -168,7 +140,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       customer,
       restaurant,
       restaurant.deliveryFee,
-      discountAmount
+      0
     );
 
     const whatsappUrl = generateWhatsAppUrl(restaurant.whatsappNumber, message);
@@ -181,6 +153,44 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         origin: { y: 0.6 },
         colors: ['#ec4899', '#f43f5e', '#fb7185', '#ffffff'],
       });
+    } catch {
+      // safe fallback
+    }
+
+    // Record order in backend database for cash register tracking
+    try {
+      fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: customer.name.trim() || (tableNumber ? `Mesa ${tableNumber}` : 'Cliente WhatsApp'),
+          customerPhone: customer.phone.trim() || undefined,
+          deliveryType: customer.deliveryType,
+          tableNumber: tableNumber || customer.tableNumber || undefined,
+          items: cart.map((item) => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+            itemTotalPrice: item.itemTotalPrice,
+            notes: item.notes || undefined,
+          })),
+          subtotal,
+          deliveryFee,
+          discount: 0,
+          total: grandTotal,
+          status: 'completed',
+          paymentStatus: 'paid',
+          payments: [
+            {
+              method: customer.deliveryType === 'mesa' ? 'cash' : (customer.paymentMethod || 'pix'),
+              amount: grandTotal,
+              status: 'completed',
+            },
+          ],
+          orderNotes: customer.orderNotes || undefined,
+          cashChangeFor: customer.cashChangeFor || undefined,
+        }),
+      }).catch((err) => console.warn('Could not sync order to cash register:', err));
     } catch {
       // safe fallback
     }
@@ -741,47 +751,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
               )}
 
-              {/* Coupon Code (Ocultado em Pedidos na Mesa) */}
-              {!(tableNumber || customer.deliveryType === 'mesa') && (
-                <div className="space-y-2">
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <Tag className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="text"
-                        placeholder="Tem um cupom? (ex: CLASH10)"
-                        value={couponCode}
-                        onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                        className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm uppercase font-semibold bg-gray-50 border border-gray-200 rounded-xl focus:border-pink-500 focus:bg-white outline-hidden"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleApplyCoupon}
-                      className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
-                    >
-                      Aplicar
-                    </button>
-                  </div>
-
-                  {appliedCoupon && (
-                    <div className="flex items-center justify-between text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
-                      <span>Cupom {appliedCoupon.code} aplicado com sucesso!</span>
-                      <button
-                        onClick={() => setAppliedCoupon(null)}
-                        className="text-gray-400 hover:text-rose-500 ml-2"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  )}
-
-                  {couponError && (
-                    <p className="text-[11px] text-rose-500 font-semibold">{couponError}</p>
-                  )}
-                </div>
-              )}
-
               {/* General Order Notes */}
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1">
@@ -824,12 +793,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       ? formatCurrency(deliveryFee)
                       : 'Grátis (Retirada)'}
                   </span>
-                </div>
-              )}
-              {discountAmount > 0 && (
-                <div className="flex justify-between text-emerald-600 font-bold">
-                  <span>Desconto aplicado</span>
-                  <span>- {formatCurrency(discountAmount)}</span>
                 </div>
               )}
               <div className="flex justify-between text-base sm:text-lg font-black text-gray-900 pt-2 border-t border-pink-100">

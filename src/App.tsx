@@ -10,10 +10,12 @@ import { CartDrawer } from './components/CartDrawer';
 import { OrderSuccessModal } from './components/OrderSuccessModal';
 import { FlyerModal } from './components/FlyerModal';
 import { TableQRModal } from './components/TableQRModal';
+import { CashRegisterModal } from './components/admin/CashRegisterModal';
 import { Footer } from './components/Footer';
 import { formatCurrency } from './utils/formatters';
 import { checkStoreStatus, StoreStatus } from './utils/storeHours';
 import { detectTableFromUrl, clearTableSession } from './utils/tableService';
+import { canShowAdminControls, enableAdminMode, disableAdminMode } from './utils/adminAccess';
 import { ShoppingBag, ArrowRight, Search, UtensilsCrossed, Clock, AlertTriangle, QrCode } from 'lucide-react';
 
 export default function App() {
@@ -21,6 +23,9 @@ export default function App() {
   const categories = cardapioData.categories as Category[];
   const products = cardapioData.products as Product[];
   const availableAddons = cardapioData.addons as Record<string, Addon[]>;
+
+  // Admin / Studio environment mode
+  const [isAdminMode, setIsAdminMode] = useState<boolean>(() => canShowAdminControls());
 
   // Store open/close status (open 16:00 to 23:00)
   const [storeStatus, setStoreStatus] = useState<StoreStatus>(() => checkStoreStatus());
@@ -99,6 +104,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isFlyerOpen, setIsFlyerOpen] = useState(false);
+  const [isCashRegisterOpen, setIsCashRegisterOpen] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState<{
     isOpen: boolean;
     message: string;
@@ -225,6 +231,19 @@ export default function App() {
     });
   };
 
+  const handleToggleAdmin = () => {
+    setIsAdminMode((prev) => {
+      const next = !prev;
+      if (next) {
+        enableAdminMode();
+        setIsCashRegisterOpen(true);
+      } else {
+        disableAdminMode();
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#faf7f9] text-gray-900 flex flex-col selection:bg-pink-500 selection:text-white">
       {/* Top Header */}
@@ -239,6 +258,9 @@ export default function App() {
         onOpenFlyer={() => setIsFlyerOpen(true)}
         tableNumber={tableNumber}
         onExitTableMode={handleExitTableMode}
+        onOpenCashRegister={() => setIsCashRegisterOpen(true)}
+        showAdminControls={isAdminMode}
+        onToggleAdmin={handleToggleAdmin}
       />
 
       {/* Invalid Table Notice (if user enters an invalid table number) */}
@@ -515,11 +537,20 @@ export default function App() {
         onSelectTableForTesting={handleSelectTableForTesting}
       />
 
+      {/* Caixa e Fechamento Automático de Caixa Modal */}
+      <CashRegisterModal
+        isOpen={isCashRegisterOpen}
+        onClose={() => setIsCashRegisterOpen(false)}
+        whatsappNumber={restaurant.whatsappNumber}
+      />
+
       {/* Footer */}
       <Footer
         restaurant={restaurant}
         onOpenFlyer={() => setIsFlyerOpen(true)}
         onOpenQRModal={() => setIsQRModalOpen(true)}
+        onOpenCashRegister={() => setIsCashRegisterOpen(true)}
+        showAdminControls={isAdminMode}
       />
     </div>
   );

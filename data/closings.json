@@ -1,0 +1,96 @@
+[
+  {
+    "id": "FECH-2026-10-20",
+    "date": "2026-10-20",
+    "dateFormatted": "20/10/2026",
+    "closedAt": "2026-10-20T23:00:00.000Z",
+    "closedAtFormatted": "20/10/2026 às 23:00",
+    "closedBy": "Sistema Automático (23:00)",
+    "isAutomatic": true,
+    "status": "closed",
+    "totalOrders": 32,
+    "completedOrders": 30,
+    "canceledOrders": 2,
+    "pendingOrders": 0,
+    "grossRevenue": 1140,
+    "totalDiscounts": 0,
+    "totalDeliveryFees": 60,
+    "totalReceived": 1200,
+    "averageTicket": 40,
+    "payments": {
+      "debit": {
+        "count": 6,
+        "total": 250
+      },
+      "credit": {
+        "count": 8,
+        "total": 320
+      },
+      "pix": {
+        "count": 12,
+        "total": 480
+      },
+      "cash": {
+        "count": 4,
+        "total": 150,
+        "initialFloat": 100,
+        "expectedInDrawer": 250
+      },
+      "other": {
+        "count": 0,
+        "total": 0
+      }
+    },
+    "pendingPaymentsTotal": 0,
+    "canceledAmount": 70,
+    "initialFloat": 100,
+    "orderIds": []
+  },
+  {
+    "id": "FECH-2026-10-19",
+    "date": "2026-10-19",
+    "dateFormatted": "19/10/2026",
+    "closedAt": "2026-10-19T23:00:00.000Z",
+    "closedAtFormatted": "19/10/2026 às 23:00",
+    "closedBy": "Sistema Automático (23:00)",
+    "isAutomatic": true,
+    "status": "closed",
+    "totalOrders": 28,
+    "completedOrders": 27,
+    "canceledOrders": 1,
+    "pendingOrders": 0,
+    "grossRevenue": 980,
+    "totalDiscounts": 0,
+    "totalDeliveryFees": 54,
+    "totalReceived": 1034,
+    "averageTicket": 38.3,
+    "payments": {
+      "debit": {
+        "count": 5,
+        "total": 210
+      },
+      "credit": {
+        "count": 7,
+        "total": 290
+      },
+      "pix": {
+        "count": 11,
+        "total": 414
+      },
+      "cash": {
+        "count": 4,
+        "total": 120,
+        "initialFloat": 100,
+        "expectedInDrawer": 220
+      },
+      "other": {
+        "count": 0,
+        "total": 0
+      }
+    },
+    "pendingPaymentsTotal": 0,
+    "canceledAmount": 35,
+    "initialFloat": 100,
+    "orderIds": []
+  }
+]

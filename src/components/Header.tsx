@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShoppingBag, Search, Clock, Bike, Instagram, Phone, X } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { ShoppingBag, Search, Clock, Bike, Instagram, Phone, X, DollarSign } from 'lucide-react';
 import { RestaurantInfo } from '../types';
 import { StoreStatus } from '../utils/storeHours';
 import clashLogo from '../assets/images/clash_burguer_king_princess_logo_1792257605760.jpg';
@@ -15,6 +15,9 @@ interface HeaderProps {
   onOpenFlyer?: () => void;
   tableNumber?: string | null;
   onExitTableMode?: () => void;
+  onOpenCashRegister?: () => void;
+  showAdminControls?: boolean;
+  onToggleAdmin?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -27,7 +30,28 @@ export const Header: React.FC<HeaderProps> = ({
   onSearchChange,
   tableNumber,
   onExitTableMode,
+  onOpenCashRegister,
+  showAdminControls = false,
+  onToggleAdmin,
 }) => {
+  const [logoClicks, setLogoClicks] = useState(0);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleLogoClick = () => {
+    setLogoClicks((prev) => {
+      const next = prev + 1;
+      if (next >= 5) {
+        if (onToggleAdmin) {
+          onToggleAdmin();
+        }
+        return 0;
+      }
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      clickTimeoutRef.current = setTimeout(() => setLogoClicks(0), 3000);
+      return next;
+    });
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-pink-100 shadow-xs">
       {/* Top micro bar */}
@@ -95,7 +119,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between gap-3">
           {/* Logo & Brand */}
           <div className="flex items-center gap-3">
-            <div className="relative group cursor-pointer">
+            <div
+              className="relative group cursor-pointer"
+              onClick={handleLogoClick}
+              title={showAdminControls ? "Painel Admin Ativo (Studio)" : undefined}
+            >
               <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-pink-500 via-pink-600 to-rose-600 p-0.5 shadow-md shadow-pink-500/25 flex items-center justify-center overflow-hidden">
                 <img
                   src={clashLogo}
@@ -136,6 +164,18 @@ export const Header: React.FC<HeaderProps> = ({
               <Instagram className="w-4 h-4 text-pink-500" />
               <span className="hidden lg:inline">{restaurant.instagram}</span>
             </a>
+
+            {/* Caixa & Fechamento - Exclusivo do Studio / Administrador (Invisível para clientes) */}
+            {showAdminControls && onOpenCashRegister && (
+              <button
+                onClick={onOpenCashRegister}
+                className="px-2.5 py-2 text-pink-700 bg-pink-50 hover:bg-pink-100 border border-pink-200 hover:border-pink-300 rounded-2xl transition-all flex items-center gap-1 text-xs font-bold cursor-pointer shadow-xs active:scale-95 animate-in fade-in"
+                title="Fechamento de Caixa - Painel Administrativo"
+              >
+                <DollarSign className="w-4 h-4 text-pink-600" />
+                <span className="hidden sm:inline">Caixa</span>
+              </button>
+            )}
 
             {/* Cart Button */}
             <button

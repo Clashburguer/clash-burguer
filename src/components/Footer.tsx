@@ -1,5 +1,4 @@
-import React from 'react';
-import { Phone, Clock, Bike, Instagram, Heart, FileText, QrCode } from 'lucide-react';
+import { Phone, Clock, Bike, Instagram, Heart, FileText, QrCode, DollarSign } from 'lucide-react';
 import { RestaurantInfo } from '../types';
 import clashLogo from '../assets/images/clash_burguer_king_princess_logo_1792257605760.jpg';
 
@@ -7,9 +6,17 @@ interface FooterProps {
   restaurant: RestaurantInfo;
   onOpenFlyer: () => void;
   onOpenQRModal?: () => void;
+  onOpenCashRegister?: () => void;
+  showAdminControls?: boolean;
 }
 
-export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer, onOpenQRModal }) => {
+export const Footer: React.FC<FooterProps> = ({
+  restaurant,
+  onOpenFlyer,
+  onOpenQRModal,
+  onOpenCashRegister,
+  showAdminControls = false,
+}) => {
   return (
     <footer className="bg-white border-t border-pink-100 mt-16 pt-12 pb-24 sm:pb-12 text-gray-600">
       <div className="max-w-6xl mx-auto px-4">
@@ -108,13 +115,23 @@ export const Footer: React.FC<FooterProps> = ({ restaurant, onOpenFlyer, onOpenQ
                 <FileText className="w-3.5 h-3.5" />
                 <span>Ver Panfleto Digital Clash Burguer</span>
               </button>
-              {onOpenQRModal && (
+              {/* Ferramentas do Administrador (Exclusivo do Studio / Admin - Invisível para Clientes) */}
+              {showAdminControls && onOpenQRModal && (
                 <button
                   onClick={onOpenQRModal}
                   className="text-xs text-gray-700 hover:text-pink-600 hover:underline font-bold inline-flex items-center gap-1 cursor-pointer"
                 >
                   <QrCode className="w-3.5 h-3.5 text-pink-600" />
                   <span>QR Codes das Mesas (01 a 04)</span>
+                </button>
+              )}
+              {showAdminControls && onOpenCashRegister && (
+                <button
+                  onClick={onOpenCashRegister}
+                  className="mt-1 text-xs text-pink-700 hover:text-pink-800 font-bold inline-flex items-center gap-1.5 cursor-pointer bg-pink-50 hover:bg-pink-100 px-3 py-1.5 rounded-xl border border-pink-200 transition-colors w-fit"
+                >
+                  <DollarSign className="w-3.5 h-3.5 text-pink-600" />
+                  <span>Fechamento de Caixa (Administração)</span>
                 </button>
               )}
             </div>

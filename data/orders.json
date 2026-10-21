@@ -1,0 +1,277 @@
+[
+  {
+    "id": "#1001",
+    "orderNumber": 1001,
+    "createdAt": "2026-10-21T20:15:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "16:15:00",
+    "customerName": "Carlos Eduardo",
+    "customerPhone": "(97) 98401-2233",
+    "deliveryType": "delivery",
+    "items": [
+      {
+        "name": "Clash Smash Duplo",
+        "quantity": 2,
+        "price": 18,
+        "itemTotalPrice": 36
+      },
+      {
+        "name": "Batata Frita Tradicional",
+        "quantity": 1,
+        "price": 12,
+        "itemTotalPrice": 12
+      },
+      {
+        "name": "Coca-Cola Lata 350ml",
+        "quantity": 2,
+        "price": 5,
+        "itemTotalPrice": 10
+      }
+    ],
+    "subtotal": 58,
+    "deliveryFee": 2,
+    "discount": 0,
+    "total": 60,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "pix",
+        "amount": 60,
+        "status": "completed"
+      }
+    ]
+  },
+  {
+    "id": "#1002",
+    "orderNumber": 1002,
+    "createdAt": "2026-10-21T20:45:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "16:45:00",
+    "customerName": "Mariana Silva",
+    "customerPhone": "(97) 98114-5566",
+    "deliveryType": "mesa",
+    "tableNumber": "02",
+    "items": [
+      {
+        "name": "Clash Bacon",
+        "quantity": 2,
+        "price": 20,
+        "itemTotalPrice": 40
+      },
+      {
+        "name": "Suco Natural de Acerola",
+        "quantity": 2,
+        "price": 6,
+        "itemTotalPrice": 12
+      }
+    ],
+    "subtotal": 52,
+    "deliveryFee": 0,
+    "discount": 0,
+    "total": 52,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "credit",
+        "amount": 52,
+        "status": "completed"
+      }
+    ]
+  },
+  {
+    "id": "#1003",
+    "orderNumber": 1003,
+    "createdAt": "2026-10-21T21:10:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "17:10:00",
+    "customerName": "João Pedro Ramos",
+    "customerPhone": "(97) 99122-8877",
+    "deliveryType": "delivery",
+    "items": [
+      {
+        "name": "Kikão Especial",
+        "quantity": 3,
+        "price": 10,
+        "itemTotalPrice": 30
+      },
+      {
+        "name": "Água Mineral 300ml",
+        "quantity": 2,
+        "price": 3,
+        "itemTotalPrice": 6
+      }
+    ],
+    "subtotal": 36,
+    "deliveryFee": 2,
+    "discount": 0,
+    "total": 38,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "cash",
+        "amount": 38,
+        "status": "completed"
+      }
+    ],
+    "cashChangeFor": "R$ 50,00"
+  },
+  {
+    "id": "#1004",
+    "orderNumber": 1004,
+    "createdAt": "2026-10-21T21:40:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "17:40:00",
+    "customerName": "Beatriz Lima",
+    "customerPhone": "(97) 98833-4411",
+    "deliveryType": "mesa",
+    "tableNumber": "01",
+    "items": [
+      {
+        "name": "Clash Calabresa",
+        "quantity": 1,
+        "price": 18,
+        "itemTotalPrice": 18
+      },
+      {
+        "name": "Clash Salsicha",
+        "quantity": 1,
+        "price": 18,
+        "itemTotalPrice": 18
+      },
+      {
+        "name": "Bolo Simples",
+        "quantity": 1,
+        "price": 6,
+        "itemTotalPrice": 6
+      }
+    ],
+    "subtotal": 42,
+    "deliveryFee": 0,
+    "discount": 0,
+    "total": 42,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "debit",
+        "amount": 42,
+        "status": "completed"
+      }
+    ]
+  },
+  {
+    "id": "#1005",
+    "orderNumber": 1005,
+    "createdAt": "2026-10-21T22:05:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "18:05:00",
+    "customerName": "Renato Oliveira",
+    "customerPhone": "(97) 98221-9988",
+    "deliveryType": "delivery",
+    "items": [
+      {
+        "name": "Clash Supremo",
+        "quantity": 2,
+        "price": 25,
+        "itemTotalPrice": 50
+      },
+      {
+        "name": "Batata com Cheddar e Bacon",
+        "quantity": 1,
+        "price": 22,
+        "itemTotalPrice": 22
+      }
+    ],
+    "subtotal": 72,
+    "deliveryFee": 2,
+    "discount": 0,
+    "total": 74,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "pix",
+        "amount": 34,
+        "status": "completed"
+      },
+      {
+        "method": "credit",
+        "amount": 40,
+        "status": "completed"
+      }
+    ]
+  },
+  {
+    "id": "#1006",
+    "orderNumber": 1006,
+    "createdAt": "2026-10-21T22:30:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "18:30:00",
+    "customerName": "Cliente Cancelado Teste",
+    "customerPhone": "(97) 98111-0000",
+    "deliveryType": "delivery",
+    "items": [
+      {
+        "name": "Clash Smash",
+        "quantity": 1,
+        "price": 15,
+        "itemTotalPrice": 15
+      }
+    ],
+    "subtotal": 15,
+    "deliveryFee": 2,
+    "discount": 0,
+    "total": 17,
+    "status": "canceled",
+    "paymentStatus": "canceled",
+    "payments": [
+      {
+        "method": "pix",
+        "amount": 17,
+        "status": "pending"
+      }
+    ],
+    "orderNotes": "Cliente desistiu antes do preparo"
+  },
+  {
+    "id": "#1007",
+    "orderNumber": 1007,
+    "createdAt": "2026-10-21T23:00:00.000Z",
+    "localDate": "2026-10-21",
+    "localTime": "19:00:00",
+    "customerName": "Lucas Ferreira",
+    "customerPhone": "(97) 98455-7722",
+    "deliveryType": "mesa",
+    "tableNumber": "03",
+    "items": [
+      {
+        "name": "Kikão Tradicional Simples",
+        "quantity": 2,
+        "price": 6,
+        "itemTotalPrice": 12
+      },
+      {
+        "name": "Suco Natural de Maracujá",
+        "quantity": 2,
+        "price": 6,
+        "itemTotalPrice": 12
+      }
+    ],
+    "subtotal": 24,
+    "deliveryFee": 0,
+    "discount": 0,
+    "total": 24,
+    "status": "completed",
+    "paymentStatus": "paid",
+    "payments": [
+      {
+        "method": "cash",
+        "amount": 24,
+        "status": "completed"
+      }
+    ]
+  }
+]
