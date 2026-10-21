@@ -741,44 +741,46 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
               )}
 
-              {/* Coupon Code */}
-              <div className="space-y-2">
-                <div className="flex gap-2">
-                  <div className="relative flex-1">
-                    <Tag className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      placeholder="Tem um cupom? (ex: CLASH10)"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm uppercase font-semibold bg-gray-50 border border-gray-200 rounded-xl focus:border-pink-500 focus:bg-white outline-hidden"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleApplyCoupon}
-                    className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
-                  >
-                    Aplicar
-                  </button>
-                </div>
-
-                {appliedCoupon && (
-                  <div className="flex items-center justify-between text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
-                    <span>Cupom {appliedCoupon.code} aplicado com sucesso!</span>
+              {/* Coupon Code (Ocultado em Pedidos na Mesa) */}
+              {!(tableNumber || customer.deliveryType === 'mesa') && (
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Tag className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Tem um cupom? (ex: CLASH10)"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                        className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm uppercase font-semibold bg-gray-50 border border-gray-200 rounded-xl focus:border-pink-500 focus:bg-white outline-hidden"
+                      />
+                    </div>
                     <button
-                      onClick={() => setAppliedCoupon(null)}
-                      className="text-gray-400 hover:text-rose-500 ml-2"
+                      type="button"
+                      onClick={handleApplyCoupon}
+                      className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      Aplicar
                     </button>
                   </div>
-                )}
 
-                {couponError && (
-                  <p className="text-[11px] text-rose-500 font-semibold">{couponError}</p>
-                )}
-              </div>
+                  {appliedCoupon && (
+                    <div className="flex items-center justify-between text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                      <span>Cupom {appliedCoupon.code} aplicado com sucesso!</span>
+                      <button
+                        onClick={() => setAppliedCoupon(null)}
+                        className="text-gray-400 hover:text-rose-500 ml-2"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  {couponError && (
+                    <p className="text-[11px] text-rose-500 font-semibold">{couponError}</p>
+                  )}
+                </div>
+              )}
 
               {/* General Order Notes */}
               <div>
@@ -807,16 +809,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <span>Subtotal ({cart.length} {cart.length === 1 ? 'item' : 'itens'})</span>
                 <span className="font-bold text-gray-800">{formatCurrency(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-gray-500">
-                <span>Taxa de Entrega</span>
-                <span className="font-bold text-gray-800">
-                  {tableNumber || customer.deliveryType === 'mesa'
-                    ? `Grátis (Mesa ${tableNumber || customer.tableNumber || '01'})`
-                    : customer.deliveryType === 'delivery'
+              {tableNumber || customer.deliveryType === 'mesa' ? (
+                <div className="flex justify-between text-gray-500">
+                  <span>Mesa</span>
+                  <span className="font-bold text-pink-600">
+                    Mesa {parseInt(tableNumber || customer.tableNumber || '1', 10)}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex justify-between text-gray-500">
+                  <span>Taxa de Entrega</span>
+                  <span className="font-bold text-gray-800">
+                    {customer.deliveryType === 'delivery'
                       ? formatCurrency(deliveryFee)
                       : 'Grátis (Retirada)'}
-                </span>
-              </div>
+                  </span>
+                </div>
+              )}
               {discountAmount > 0 && (
                 <div className="flex justify-between text-emerald-600 font-bold">
                   <span>Desconto aplicado</span>

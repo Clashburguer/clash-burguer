@@ -89,12 +89,12 @@ export function buildWhatsAppMessage(
   text += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
   text += `💰 *RESUMO DE VALORES*\n`;
   text += `• Subtotal dos itens: ${formatCurrency(subtotal)}\n`;
-  if (isMesa) {
-    text += `• Taxa de entrega: Grátis (Consumo no Local)\n`;
-  } else if (customer.deliveryType === 'delivery') {
-    text += `• Taxa de entrega: ${formatCurrency(actualDeliveryFee)}\n`;
-  } else {
-    text += `• Taxa de entrega: Grátis (Retirada)\n`;
+  if (!isMesa) {
+    if (customer.deliveryType === 'delivery') {
+      text += `• Taxa de entrega: ${formatCurrency(actualDeliveryFee)}\n`;
+    } else {
+      text += `• Taxa de entrega: Grátis (Retirada)\n`;
+    }
   }
   if (discount > 0) {
     text += `• Desconto: -${formatCurrency(discount)}\n`;
