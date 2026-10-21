@@ -17,3 +17,17 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Salvaguarda para ocultar badges e widgets injetados pela Netlify */
+#netlify-drawer,
+[data-netlify-drawer],
+.netlify-badge,
+iframe[title*="Netlify" i],
+iframe[id*="netlify" i],
+div[class*="netlify-badge" i] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
